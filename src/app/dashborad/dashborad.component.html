@@ -1,1 +1,63 @@
-<p>dashborad works!</p>
+<link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+
+<div class="container mx-auto my-4 ">
+    <div class="border-solid border-2 border-grey-500 p-3">
+        <div class="flex align-center justify-end">
+            <label class="py-1 my-3 mx-3 bold">Aggiungi dipendente</label>
+            <button type="button" class="px-3 py-1 my-3 font-semibold rounded-full bg-gray-300 dark:text-gray-800 flex"
+                (click)="toggle()"><span class="material-symbols-outlined">add
+
+                </span></button>
+        </div>
+        <ng-template [ngIf]="showForm">
+
+            <app-form-employee></app-form-employee>
+
+        </ng-template>
+    </div>
+
+
+    <div class="container p-2 mx-auto rounded-md sm:p-4 dark:text-gray-100 dark:bg-gray-900">
+        <h2 class="mb-3 text-2xl font-semibold leadi">Standings</h2>
+        <div class="overflow-x-auto">
+            <table class="min-w-full text-xs">
+                <thead class="rounded-t-lg dark:bg-gray-700">
+                    <tr class="text-right">
+                        <th title="Matricola" class="p-3 text-left">Matricola</th>
+                        <th title="Nome" class="p-3">Nome</th>
+                        <th title="Cognome" class="p-3">Cognome</th>
+                        <th title="Data di Nascita" class="p-3">Data di Nascita</th>
+                        <th title="Città" class="p-3">Città</th>
+                        <th title="Indirizzo" class="p-3">Indirizzo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let employee of employees"
+                        class="text-right border-b border-opacity-20 dark:border-gray-700 dark:bg-gray-800">
+                        <td class="px-3 py-2 text-left">
+                            <span>{{employee.matricola}}</span>
+                        </td>
+                        <td class="px-3 py-2">
+                            <span>{{ employee.nome}}</span>
+                        </td>
+                        <td class="px-3 py-2">
+                            <span>{{employee.cognome}}</span>
+                        </td>
+                        <td class="px-3 py-2">
+                            <span>{{employee.dataDiNascita}}</span>
+                        </td>
+                        <td class="px-3 py-2 text-right">
+                            <span>{{employee.citta}}</span>
+                        </td>
+                        <td class="px-3 py-2">
+                            <span>{{employee.indirizzo}}</span>
+                        </td>
+                    </tr>
+            </table>
+        </div>
+    </div>
+
+
+</div>
