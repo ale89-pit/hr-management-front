@@ -27,7 +27,8 @@ export class DetailsComponent {
   }
 
   ModificaDipendente(evento:Event)  {
-    //this.employeeService.patchEmployeeById((<HTMLInputElement>evento.target).value).then();
+    //this.employeeService.patchEmployeeById((<HTMLInputElement>evento.target).json()).then();
+    //alert("Dipendente modificato!");
   }
 
   ModificaArea():void  {
@@ -39,7 +40,9 @@ export class DetailsComponent {
   }
 
   CancellaDipendete() {
-    this.employeeService.deleteEmployeeById(this.id).then();
+    this.employeeService.deleteEmployeeById(this.id).then(data=>(console.log(data)));
+    alert("Dipendente cancellato!");
+    window.location.assign("https://localhost:4200/");//se metto paradossalmente un altro sito ci vado senza problemi, peccato...perchè in linea di massima funzionerebbe
   }
 
 }
