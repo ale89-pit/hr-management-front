@@ -6,11 +6,12 @@ import { RefNationality } from '../interface/refNationalitiInterface';
 })
 export class NationalityServiceService {
 
-  url ="http://localhost:8080/refnazionalita/listanazionalita"
+  url ="http://localhost:8080/";
   constructor() { }
 
   async gettAllNationality():  Promise<RefNationality[]> {
-    const data =  await fetch(this.url);
+    let url=this.url+`refnazionalita/listanazionalita`;
+    const data =  await fetch(url);
     return await data.json() ?? []; 
     
   }

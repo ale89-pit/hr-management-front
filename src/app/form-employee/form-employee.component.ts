@@ -2,9 +2,9 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { RefNationality } from '../interface/refNationalitiInterface';
-import { NationalityServiceService } from './nationality-service.service';
+import { NationalityServiceService } from '../service/nationality-service.service';
 import { EmployeeDTOInterface } from '../interface/employeeDTOInterface';
-import { EmployeeServiceService } from '../employee-service.service';
+import { EmployeeServiceService } from '../service/employee-service.service';
 import { ModalComponent } from '../modal/modal.component';
 import moment from 'moment';
 

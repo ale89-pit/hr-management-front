@@ -1,5 +1,6 @@
 import {SkillsInterface} from '../interface/skillsInteface'
 import { CurriculumInterface } from './curriculumInterface'
+import { RefNationality } from './refNationalitiInterface';
 
 export interface EmployeeInterface {
     idDipendente: number,
@@ -10,6 +11,7 @@ export interface EmployeeInterface {
     rowExist: number,
     citta:string,
     indirizzo:string,
-    skills:SkillsInterface[]
+    skills:SkillsInterface[];
+    refNazionalita:RefNationality;
     curriculum:CurriculumInterface[]
 }

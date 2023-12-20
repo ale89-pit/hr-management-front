@@ -17,22 +17,21 @@
             </section>
         </ng-template>
         <ng-template #formModificaAreaPersonale>
-            <form>
+            <form [formGroup]="form">
                 <fieldset>
                     <legend><h1>Area personale ID:  {{id}}</h1></legend>
                     <ul>
-                        <li><label>matricola: </label><input type="text" placeholder="{{employee?.matricola}}"></li>
-                        <li><label>nome:  </label><input type="text" placeholder="{{ employee?.nome }}"></li>
-                        <li><label>cognome:  </label><input type="text" placeholder="{{ employee?.cognome }}"></li>
-                        <li><label>data di nascita:  </label><input type="date" defaultValue="{{ employee?.dataDiNascita }}"></li>
-                        <li><label>indirizzo:  </label><input type="text" placeholder="{{ employee?.indirizzo }}"></li>
-                        <li><label>citta:  </label><input type="text" placeholder="{{ employee?.citta }}"></li>
-                        <li><label for="nazione">nazionalita':</label>
-                            <input list="nazioni" name="nazione" id="nazione" placeholder="{{ employee?.refNazionalita?.nazionalita}}">
-                            <datalist id="nazioni">
-                                <option *ngFor="let n of nazionalitaList"  value="{{n?.nazionalita}}">{{n?.nazionalita}}</option>
-                            </datalist></li>
-                        <li><input type="reset" value="Reset" /><input type="submit" value="Submit" (click)="ModificaDipendente($event)"/></li>
+                        <li><label>matricola: </label><input type="text" placeholder="{{employee?.matricola}}" formControlName="matricola" [(ngModel)]="employee.matricola"></li>
+                        <li><label>nome:  </label><input type="text" placeholder="{{ employee?.nome }}" formControlName="nome" [(ngModel)]="employee.nome"></li>
+                        <li><label>cognome:  </label><input type="text" placeholder="{{ employee?.cognome }}" formControlName="cognome" [(ngModel)]="employee.cognome"></li>
+                        <li><label>data di nascita:  </label><input type="date" defaultValue="{{ employee?.dataDiNascita }}" formControlName="dataDiNascita" [(ngModel)]="employee.dataDiNascita"></li>
+                        <li><label>indirizzo:  </label><input type="text" placeholder="{{ employee?.indirizzo }}" formControlName="indirizzo" [(ngModel)]="employee.indirizzo"></li>
+                        <li><label>citta:  </label><input type="text" placeholder="{{ employee?.citta }}" formControlName="citta" [(ngModel)]="employee.citta"></li>
+                        <li><label>nazionalita':</label>
+                            <select formControlName="refNazionalita" [(ngModel)]="employee.refNazionalita.nazionalita">
+                                <option *ngFor="let n of nazionalitaList" [ngValue]="n.nazionalita" [selected]="n.nazionalita==employee.refNazionalita.nazionalita?true:false">{{n?.nazionalita}}</option>
+                            </select></li>
+                        <li><input type="submit" value="Submit" (click)="ModificaDipendente()"/></li>
                     </ul>
                 </fieldset>
             </form>

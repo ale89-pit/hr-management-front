@@ -2,7 +2,7 @@ import { Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormEmployeeComponent } from '../form-employee/form-employee.component';
 import { EmployeeInterface } from '../interface/employeeInterface';
-import { EmployeeServiceService } from '../employee-service.service';
+import { EmployeeServiceService } from '../service/employee-service.service';
 import { CardEmployeeComponent } from '../card-employee/card-employee.component';
 import { RouterModule } from '@angular/router';
 
