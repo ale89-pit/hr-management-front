@@ -1,1 +1,16 @@
-<p>details works!</p>
+<hr>
+<div>
+    <section>
+        <h6>Area personale ID:  {{id}}</h6>
+        <ul>
+            <li>matricola: {{ employee?.matricola }}</li>
+            <li>nome: {{ employee?.nome }}</li>
+            <li>cognome: {{ employee?.cognome }}</li>
+            <li>data di nascita: {{ employee?.dataDiNascita }}</li>
+            <li>indirizzo: {{ employee?.indirizzo }}</li>
+            <li>citta: {{ employee?.citta }}</li>
+            <li>nazionalita: {{ employee?.refNazionalita?.nazionalita}}</li>
+        </ul>
+    </section>
+</div>
+<hr>
