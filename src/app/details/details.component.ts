@@ -1,6 +1,6 @@
 import { Component,inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EmployeeServiceService } from '../service/employee-service.service';
 import { EmployeeInterface } from '../interface/employee-interface';
 import { RefNationalitaInterface } from '../interface/ref-nazionalita-interface';
@@ -20,7 +20,7 @@ export class DetailsComponent {
   nazionalitaList:RefNationalitaInterface[]|undefined;
   id=Number(this.route.snapshot.params['id']);
 
-  constructor()  {
+  constructor(private router: Router)  {
     this.employeeService.getEmployeeById(this.id).then(x=>{this.employee=x;});
     this.employeeService.getAllRefNaionalita().then(x=>{this.nazionalitaList=x});
     this.modificaAreaPersonale=false;
@@ -42,7 +42,8 @@ export class DetailsComponent {
   CancellaDipendete() {
     this.employeeService.deleteEmployeeById(this.id).then(data=>(console.log(data)));
     alert("Dipendente cancellato!");
-    window.location.assign("https://localhost:4200/");//se metto paradossalmente un altro sito ci vado senza problemi, peccato...perchè in linea di massima funzionerebbe
+    this.router.navigate(['']);
+    // window.location.assign("https://localhost:4200/");//se metto paradossalmente un altro sito ci vado senza problemi, peccato...perchè in linea di massima funzionerebbe
   }
 
 }

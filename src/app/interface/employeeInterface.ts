@@ -2,7 +2,7 @@ import {SkillsInterface} from '../interface/skillsInteface'
 import { CurriculumInterface } from './curriculumInterface'
 
 export interface EmployeeInterface {
-    id: number,
+    idDipendente: number,
     nome: string,
     cognome: string,
     dataDiNascita: string,

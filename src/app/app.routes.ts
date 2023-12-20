@@ -1,11 +1,12 @@
 import { Routes } from '@angular/router';
 import { CardEmployeeComponent } from './card-employee/card-employee.component';
 import { DetailsComponent } from './details/details.component';
+import { DashboradComponent } from './dashborad/dashborad.component';
 
 const routes: Routes = [
     {
         path:'',
-        component:CardEmployeeComponent,
+        component:DashboradComponent,
         title:'Home Page',
     },
     {

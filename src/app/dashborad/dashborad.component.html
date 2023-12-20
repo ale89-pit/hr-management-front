@@ -19,7 +19,7 @@
     </div>
 
 
-    <div class="container p-2 mx-auto rounded-md sm:p-4 dark:text-gray-100 dark:bg-gray-900">
+    <div class="container p-2 mx-auto rounded-md sm:p-4 my-5 dark:text-gray-100 dark:bg-gray-900">
         <h2 class="mb-3 text-2xl font-semibold leadi">Standings</h2>
         <div class="overflow-x-auto">
             <table class="min-w-full text-xs">
@@ -31,6 +31,7 @@
                         <th title="Data di Nascita" class="p-3">Data di Nascita</th>
                         <th title="Città" class="p-3">Città</th>
                         <th title="Indirizzo" class="p-3">Indirizzo</th>
+                        <th title="Action" class="p-3">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -53,6 +54,10 @@
                         </td>
                         <td class="px-3 py-2">
                             <span>{{employee.indirizzo}}</span>
+                        </td>
+                        <td class="px-3 py-2">
+                            <a class="border-2 p-1 border-blue-500 m-6 custom-button-spacing rounded-b-lg text-white bg-blue-500"
+                                [routerLink]="['/details', employee.idDipendente]">Dettagli</a>
                         </td>
                     </tr>
             </table>
