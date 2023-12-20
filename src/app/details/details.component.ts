@@ -26,7 +26,7 @@ export class DetailsComponent {
     this.modificaAreaPersonale=false;
   }
 
-  ModificaDipendete(evento:Event)  {
+  ModificaDipendente(evento:Event)  {
     //this.employeeService.patchEmployeeById((<HTMLInputElement>evento.target).value).then();
   }
 

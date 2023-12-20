@@ -1,7 +1,7 @@
 <hr>
 <div class="inline-flex">
     <div>
-        <ng-container *ngIf="modificaAreaPersonale; then areaPersonale else formModificaAreaPersonale"></ng-container>
+        <ng-container *ngIf="!modificaAreaPersonale; then areaPersonale else formModificaAreaPersonale"></ng-container>
         <ng-template #areaPersonale>
             <section>
                 <h1>Area personale ID:  {{id}}</h1>
@@ -32,7 +32,7 @@
                             <datalist id="nazioni">
                                 <option *ngFor="let n of nazionalitaList"  value="{{n?.nazionalita}}">{{n?.nazionalita}}</option>
                             </datalist></li>
-                        <li><input type="reset" value="Reset" /><input type="submit" value="Submit" (click)="ModificaDipendete()"/></li>
+                        <li><input type="reset" value="Reset" /><input type="submit" value="Submit" (click)="ModificaDipendente($event)"/></li>
                     </ul>
                 </fieldset>
             </form>
