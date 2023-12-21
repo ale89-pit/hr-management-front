@@ -8,7 +8,6 @@ import { NationalityServiceService } from '../service/nationality-service.servic
 import{AbstractControl, FormBuilder, FormControl,FormGroup,ReactiveFormsModule, Validators} from '@angular/forms';
 import { ModalComponent } from '../modal/modal.component';
 import moment from 'moment';
-import { EmployeeDTOInterfaceUpdate } from '../interface/employeeDTOInterfaceUpdate';
 @Component({
   selector: 'app-details',
   standalone: true,  
@@ -20,22 +19,22 @@ export class DetailsComponent {
   modificaAreaPersonale:boolean;
   route:ActivatedRoute=inject(ActivatedRoute);
   nazionalityService=inject(NationalityServiceService);
-  employeeService=inject(EmployeeServiceService);
-  employee:EmployeeInterface={
-    idDipendente: 0,
-    nome: '',
-    cognome: '',
-    dataDiNascita: '',
-    matricola: '',
-    rowExist: 0,
-    citta: '',
-    indirizzo: '',
-    skills: [],
-    refNazionalita: {id:0,nazionalita:''},
-    curriculum: []
-  };
-  nazionalitaList:RefNationality[]|undefined;
+  employeeService=inject(EmployeeServiceService);  
   id=Number(this.route.snapshot.params['id']);
+  employee:EmployeeInterface= {
+    idDipendente:this.id,
+    nome: undefined,
+    cognome: undefined,
+    dataDiNascita: undefined,
+    matricola: undefined,
+    citta: undefined,
+    indirizzo: undefined,
+    rowExist:undefined,
+    skills:undefined,
+    refNazionalita:undefined,
+    curriculum:undefined
+}
+  nazionalitaList:RefNationality[]|undefined;
   form = new FormGroup({
     nome: new FormControl(''),
     cognome: new FormControl(''),
@@ -43,8 +42,11 @@ export class DetailsComponent {
     matricola: new FormControl('1'),
     citta: new FormControl(''),
     indirizzo: new FormControl(''),
-    refNazionalita: new FormControl(''),
+    selectNazionalita: new FormControl(''),
   });
+  submitted = false;
+  showModal = false;
+  
   constructor(private router: Router, private FormBuilder:FormBuilder) { 
     this.employeeService.getEmployeeById(this.id).then(x=>{this.employee=x;});
     this.nazionalityService.gettAllNationality().then(x=>{this.nazionalitaList=x});
@@ -68,30 +70,53 @@ export class DetailsComponent {
 
     ngOnInit()  {
         this.form = this.FormBuilder.group({
-        nome: ['',[Validators.required]],
-        cognome: ['',[Validators.required]],
+        nome: ['',[Validators.required,Validators.minLength(3)]],
+        cognome: ['',[Validators.required,Validators.minLength(3)]],
         dataDiNascita: ['',[Validators.required,this.dateValidation(18)]],
         matricola: [''],
         citta: ['',Validators.required],
         indirizzo: ['',Validators.required],
-        refNazionalita: ['',Validators.required],
+        selectNazionalita: ['',Validators.required],
       })
     }
 
   ModificaDipendente()  {
-    let employee: EmployeeDTOInterfaceUpdate = {
-      idDipendente: this.employee.idDipendente,
-      nome: this.form.value.nome ?? '',
-      cognome: this.form.value.cognome ?? '',
-      dataDiNascita: this.form.value.dataDiNascita?? '',
-      matricola: this.form.value.matricola ?? '',
-      citta: this.form.value.citta ?? '',
-      indirizzo: this.form.value.indirizzo ?? '',
-      refNazionalita: this.form.value.refNazionalita  ??'',
-      rowExist: this.employee.rowExist
-    };
-    this.employeeService.patchEmployeeById(employee).then(data=>console.log(data));
-    //alert("Dipendente modificato!");
+    this.submitted = true
+    if(this.form.invalid){
+      return
+    }
+    let employee:EmployeeInterface= {
+        idDipendente: this.employee.idDipendente,
+        nome: this.form.value.nome,
+        cognome: this.form.value.cognome,
+        dataDiNascita: this.form.value.dataDiNascita,
+        matricola: this.employee.matricola,
+        citta: this.form.value.citta,
+        indirizzo: this.form.value.indirizzo,
+        rowExist:undefined,
+        skills:undefined,
+        refNazionalita:
+        {
+          idRefNazionalita:1,
+          nazionalita:"keniana",
+        }, 
+        curriculum:undefined
+    }
+    
+    this.employeeService.patchEmployeeById(employee).then(response=>{
+      //if(resposne.ok) è equivalente a
+      if(response.status==200){
+        alert("Dipendente modificato!");
+        if(employee.nome) this.employee.nome=employee.nome;
+        if(employee.cognome) this.employee.cognome=employee.cognome;
+        if(employee.dataDiNascita) this.employee.dataDiNascita=employee.dataDiNascita;
+        if(employee.matricola) this.employee.matricola=employee.matricola;
+        if(employee.citta) this.employee.citta=employee.citta;
+        if(employee.indirizzo) this.employee.indirizzo=employee.indirizzo;
+        if(employee.refNazionalita) this.employee.refNazionalita=employee.refNazionalita;
+        this.modificaAreaPersonale=false;
+      }
+    })
   }
 
   ModificaArea():void  {
@@ -103,10 +128,18 @@ export class DetailsComponent {
   }
 
   CancellaDipendete() {
-    this.employeeService.deleteEmployeeById(this.id).then(data=>(console.log(data)));
-    alert("Dipendente cancellato!");
-    this.router.navigate(['']);
-    // window.location.assign("https://localhost:4200/");//se metto paradossalmente un altro sito ci vado senza problemi, peccato...perchè in linea di massima funzionerebbe
+    this.employeeService.deleteEmployeeById(this.id).then(response=>{
+      //if(resposne.ok) è equivalente a
+      if(response.status==200)
+      {
+        alert("Dipendente cancellato!");
+        this.router.navigate(['']);
+      }
+    });
   }
 
+  closeModal(){
+    console.log("ciao")
+    this.showModal = false
+  }
 }

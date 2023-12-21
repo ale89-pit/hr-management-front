@@ -17,24 +17,45 @@
             </section>
         </ng-template>
         <ng-template #formModificaAreaPersonale>
-            <form [formGroup]="form">
+            <form [formGroup]="form" (submit)="ModificaDipendente()">
                 <fieldset>
                     <legend><h1>Area personale ID:  {{id}}</h1></legend>
                     <ul>
-                        <li><label>matricola: </label><input type="text" placeholder="{{employee?.matricola}}" formControlName="matricola" [(ngModel)]="employee.matricola"></li>
-                        <li><label>nome:  </label><input type="text" placeholder="{{ employee?.nome }}" formControlName="nome" [(ngModel)]="employee.nome"></li>
-                        <li><label>cognome:  </label><input type="text" placeholder="{{ employee?.cognome }}" formControlName="cognome" [(ngModel)]="employee.cognome"></li>
-                        <li><label>data di nascita:  </label><input type="date" defaultValue="{{ employee?.dataDiNascita }}" formControlName="dataDiNascita" [(ngModel)]="employee.dataDiNascita"></li>
-                        <li><label>indirizzo:  </label><input type="text" placeholder="{{ employee?.indirizzo }}" formControlName="indirizzo" [(ngModel)]="employee.indirizzo"></li>
-                        <li><label>citta:  </label><input type="text" placeholder="{{ employee?.citta }}" formControlName="citta" [(ngModel)]="employee.citta"></li>
+                        <li>matricola: {{ employee?.matricola }}</li>
+                        <li><label>nome:  </label><input type="text" placeholder="{{ employee?.nome }}" formControlName="nome" [ngModel]="employee?.nome">
+                            <div *ngIf="submitted && form.controls.nome.invalid" class="text-red-500">
+                                <p>First name is required</p>
+                            </div>
+                        </li>
+                        <li><label>cognome:  </label><input type="text" placeholder="{{ employee?.cognome }}" formControlName="cognome" [ngModel]="employee?.cognome">
+                            <div *ngIf="submitted && form.controls.cognome.invalid" class="text-red-500">
+                                <p>Last name is required</p>
+                            </div>
+                        </li>
+                        <li><label>data di nascita:  </label><input type="date" defaultValue="{{ employee?.dataDiNascita }}" formControlName="dataDiNascita" [ngModel]="employee?.dataDiNascita">
+                            <div *ngIf="submitted && form.controls.dataDiNascita.invalid" class="text-red-500">
+                                <p>Date of birth is required</p>
+                            </div>
+                        </li>
+                        <li><label>indirizzo:  </label><input type="text" placeholder="{{ employee?.indirizzo }}" formControlName="indirizzo" [ngModel]="employee?.indirizzo">
+                            <div *ngIf="submitted && form.controls.indirizzo.invalid" class="text-red-500">
+                                <p>Address is required</p>
+                            </div>
+                        </li>
+                        <li><label>citta:  </label><input type="text" placeholder="{{ employee?.citta }}" formControlName="citta" [ngModel]="employee?.citta">
+                            <div *ngIf="submitted && form.controls.citta.invalid" class="text-red-500">
+                                <p>City is required</p>
+                            </div>
+                        </li>
                         <li><label>nazionalita':</label>
-                            <select formControlName="refNazionalita" [(ngModel)]="employee.refNazionalita.nazionalita">
-                                <option *ngFor="let n of nazionalitaList" [ngValue]="n.nazionalita" [selected]="n.nazionalita==employee.refNazionalita.nazionalita?true:false">{{n?.nazionalita}}</option>
+                            <select formControlName="selectNazionalita" [ngModel]="employee?.refNazionalita?.nazionalita">
+                                <option *ngFor="let n of nazionalitaList" [value]="n" [selected]="n.nazionalita==employee?.refNazionalita?.nazionalita">{{n.idRefNazionalita}}-{{n.nazionalita}}</option>
                             </select></li>
-                        <li><input type="submit" value="Submit" (click)="ModificaDipendente()"/></li>
+                        <li><button type="submit">Submit</button></li>
                     </ul>
                 </fieldset>
             </form>
+            
         </ng-template>
     </div>
     <div>
@@ -45,6 +66,9 @@
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" data-slot="icon" class="w-6 h-6" (click)="CancellaDipendete()">
             <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
         </svg>      
+    </div>
+    <div class="fixed top-[25%] right-[25%]" [ngClass]="{ 'hidden': !showModal }">
+        <app-modal (close)="closeModal()"></app-modal>
     </div>
 </div>
 <hr>

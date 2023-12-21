@@ -59,8 +59,8 @@ export class FormEmployeeComponent {
 
   ngOnInit(){
     this.form = this.formBuilder.group({
-      nome: ['',[Validators.required]],
-      cognome: ['',[Validators.required]],
+      nome: ['',[Validators.required,Validators.minLength(3)]],
+      cognome: ['',[Validators.required,Validators.minLength(3)]],
       dataDiNascita: ['',[Validators.required,this.dateValidation(18)]],
       matricola: ['1'],
       citta: ['',Validators.required],

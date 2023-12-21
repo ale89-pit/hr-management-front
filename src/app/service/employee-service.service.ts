@@ -28,34 +28,45 @@ export class EmployeeServiceService {
       },
       body: JSON.stringify(employee)
     });
-    if(response.ok){
-      const data = await response.json();
-      return data
-    }else{
-      throw new Error('Failed to add employee');
-    }   
+    if(!response.ok){
+      throw new Error('Failed to delete employee');      
+    }    
+    const data = await response.json()??[];
+    return data   
   }
 
   async getEmployeeById(id:Number):Promise<EmployeeInterface>{
     let url=this.url+`dipendente/getByID?id=${id}`;
-    const response = await fetch(url);
-    const data = await response.json() ?? [];
+    const response = await fetch(url,{
+      method:"GET",        
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    });
+    if(!response.ok){
+      throw new Error('Failed to delete employee');      
+    }    
+    const data = await response.json()??[];
     return data
   }
 
-  async patchEmployeeById(dipendente:EmployeeDTOInterfaceUpdate):Promise<void>{
+  async patchEmployeeById(dipendente:EmployeeInterface):Promise<any>{
     let url=this.url+`dipendente/modificaDipendente`;
-    const response = await fetch(url,{
+    return await fetch(url,{
       method:'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body:JSON.stringify(dipendente)
     });
-    const data = await response.json() ?? [];
-    return data
   }
-  async deleteEmployeeById(id:Number):Promise<void>{
+  async deleteEmployeeById(id:Number):Promise<any>{
     let url=this.url+`dipendente/esercizio_4?id=${id}`;
-    const response = await fetch(url, { method: 'DELETE' });
-    const data = await response.json() ?? [];
-    return data
+    return await fetch(url, { 
+      method: 'DELETE',    
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    });
   }
 }
