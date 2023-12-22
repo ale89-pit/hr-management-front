@@ -1,6 +1,6 @@
 import { Component,inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute,Router } from '@angular/router';
 import { EmployeeServiceService } from '../service/employee-service.service';
 import { EmployeeInterface } from '../interface/employeeInterface';
 import { RefNationality } from '../interface/refNationalitaInterface';
@@ -10,12 +10,14 @@ import { ModalComponent } from '../modal/modal.component';
 import moment from 'moment';
 import { DetailsCurriculumComponent } from "../details-curriculum/details-curriculum.component";
 import { DataSharingService } from '../service/data-sharing-service.service';
+import { DetailsTipskillComponent } from '../details-tipskill/details-tipskill.component';
+
 @Component({
     selector: 'app-details',
     standalone: true,
     templateUrl: './details-employee.component.html',
     styleUrl: './details-employee.component.css',
-    imports: [CommonModule, ReactiveFormsModule, ModalComponent, DetailsCurriculumComponent,DetailsCurriculumComponent]
+    imports: [CommonModule, ReactiveFormsModule, ModalComponent, DetailsCurriculumComponent,DetailsTipskillComponent]
 })
 export class DetailsEmployeeComponent {
   modificaAreaPersonale:boolean;

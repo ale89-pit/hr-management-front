@@ -2,11 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CurriculumServiceService } from '../service/curriculum-service.service';
 import { DataSharingService } from '../service/data-sharing-service.service';
-
-interface FileUpload {
-  file: File;
-  progress: number;
-}
+import { FileUpload } from '../interface/fileupload';
 
 @Component({
   selector: 'app-form-curriculum',

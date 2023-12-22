@@ -1,9 +1,5 @@
 import { Injectable} from '@angular/core';
-interface FileUpload {
-  file: File;
-  progress: number;
-}
-
+import { FileUpload } from '../interface/fileupload';
 @Injectable({
   providedIn: 'root'
 })
@@ -14,7 +10,7 @@ export class CurriculumServiceService {
   constructor() { }
 
   async addCVsFromIDDipendente(id:number|undefined, selectedFiles: FileUpload[]): Promise<any> {
-    let url=this.url+`/esercizio_3/addCVsFromIDDipendente/${id}`;
+    let url=this.url+`esercizio_3/addCVsFromIDDipendente/${id}`;
       const formData = new FormData();
       for (let file of selectedFiles) {
         formData.append(this.key, file.file);
@@ -29,7 +25,7 @@ export class CurriculumServiceService {
       
   }
   async deleteCVsFromID(id:number|undefined): Promise<any> {
-    let url=this.url+`/esercizio_3/deleteCVsFromID/${id}`;
+    let url=this.url+`deleteCVsFromID/${id}`;
       return await fetch(url, {
         method: 'DELETE',
         headers: {

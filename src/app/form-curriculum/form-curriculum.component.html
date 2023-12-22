@@ -3,7 +3,7 @@
         <div class="bg-white dark:bg-gray-700 shadow rounded-lg p-6">
             <h1 class="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">aggiungi curriculum al dipednete</h1>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <input type="file" (change)="onFileChange($event)" multiple >
+                    <input type="file" (change)="onFileChange($event)" multiple>
                     <div id="progressContainer">
                       <div  *ngFor="let file of selectedFiles" class="progress-bar">
                         <span>{{ file.file.name }}</span>
