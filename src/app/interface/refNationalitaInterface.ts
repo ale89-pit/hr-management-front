@@ -1,5 +1,5 @@
 export interface RefNationality {
-    idRefNazionalita: number;
+    idRefNazionalita: number|undefined;
     nazionalita: string|null|undefined;
    
 }

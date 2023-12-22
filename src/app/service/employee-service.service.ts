@@ -8,19 +8,18 @@ import { EmployeeDTOInterfaceUpdate } from '../interface/employeeDTOInterfaceUpd
 })
 export class EmployeeServiceService {
 
-  url:string="http://localhost:8080/";
-
+  url:string="http://localhost:8080/dipendente";
+  
   costructor(){}
 
-
   async getAllEmployees():  Promise<EmployeeInterface[]> {
-    let url=this.url+`dipendente/diplist`;
+    let url=this.url+`/diplist`;
     const data = await fetch(url);
     return await data.json() ?? [];
   }
 
   async addEmployee(employee: EmployeeDTOInterface): Promise<EmployeeDTOInterface> {
-    let url=this.url+`dipendente/aggiungiDipendente`;
+    let url=this.url+`/aggiungiDipendente`;
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -35,8 +34,8 @@ export class EmployeeServiceService {
     return data   
   }
 
-  async getEmployeeById(id:Number):Promise<EmployeeInterface>{
-    let url=this.url+`dipendente/getByID?id=${id}`;
+  async getEmployeeById(id:Number|undefined):Promise<EmployeeInterface>{
+    let url=this.url+`/getByID?id=${id}`;
     const response = await fetch(url,{
       method:"GET",        
       headers: {
@@ -44,14 +43,14 @@ export class EmployeeServiceService {
       },
     });
     if(!response.ok){
-      throw new Error('Failed to delete employee');      
+      throw new Error('Failed to get employee');      
     }    
     const data = await response.json()??[];
     return data
   }
 
   async patchEmployeeById(dipendente:EmployeeInterface):Promise<any>{
-    let url=this.url+`dipendente/modificaDipendente`;
+    let url=this.url+`/modificaDipendente`;
     return await fetch(url,{
       method:'PATCH',
       headers: {
@@ -61,7 +60,7 @@ export class EmployeeServiceService {
     });
   }
   async deleteEmployeeById(id:Number):Promise<any>{
-    let url=this.url+`dipendente/esercizio_4?id=${id}`;
+    let url=this.url+`/esercizio_4?id=${id}`;
     return await fetch(url, { 
       method: 'DELETE',    
       headers: {

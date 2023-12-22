@@ -33,8 +33,8 @@
                             </div>
                         </li>
                         <li><label>data di nascita:  </label><input type="date" defaultValue="{{ employee?.dataDiNascita }}" formControlName="dataDiNascita" [ngModel]="employee?.dataDiNascita">
-                            <div *ngIf="submitted && form.controls.dataDiNascita.invalid" class="text-red-500">
-                                <p>Date of birth is required</p>
+                            <div *ngIf="submitted && (form.controls.dataDiNascita.invalid || form.controls.dataDiNascita.hasError('minAge'))" class="text-red-500">
+                                <p>Date of birth is required/invalid</p>
                             </div>
                         </li>
                         <li><label>indirizzo:  </label><input type="text" placeholder="{{ employee?.indirizzo }}" formControlName="indirizzo" [ngModel]="employee?.indirizzo">
@@ -48,14 +48,13 @@
                             </div>
                         </li>
                         <li><label>nazionalita':</label>
-                            <select formControlName="selectNazionalita" [ngModel]="employee?.refNazionalita?.nazionalita">
-                                <option *ngFor="let n of nazionalitaList" [value]="n" [selected]="n.nazionalita==employee?.refNazionalita?.nazionalita">{{n.idRefNazionalita}}-{{n.nazionalita}}</option>
+                            <select formControlName="refNazionalita" [ngModel]="employee?.refNazionalita">
+                                <option *ngFor="let obj of nazionalitaList" [ngValue]="obj.idRefNazionalita" [selected]="obj.nazionalita==employee?.refNazionalita?.nazionalita">{{obj.idRefNazionalita}}-{{obj.nazionalita}}</option>
                             </select></li>
                         <li><button type="submit">Submit</button></li>
                     </ul>
                 </fieldset>
             </form>
-            
         </ng-template>
     </div>
     <div>
@@ -71,4 +70,6 @@
         <app-modal (close)="closeModal()"></app-modal>
     </div>
 </div>
+<hr>
+    <app-details-curriculum></app-details-curriculum>
 <hr>

@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import { RefNationality } from '../interface/refNationalitiInterface';
+import { RefNationality } from '../interface/refNationalitaInterface';
 import { NationalityServiceService } from '../service/nationality-service.service';
 import { EmployeeDTOInterface } from '../interface/employeeDTOInterface';
 import { EmployeeServiceService } from '../service/employee-service.service';
