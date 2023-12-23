@@ -1,11 +1,11 @@
-import { Component,inject } from '@angular/core';
+import { Component,OnInit,inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute,Router } from '@angular/router';
 import { EmployeeServiceService } from '../service/employee-service.service';
 import { EmployeeInterface } from '../interface/employeeInterface';
 import { RefNationality } from '../interface/refNationalitaInterface';
 import { NationalityServiceService } from '../service/nationality-service.service';
-import{AbstractControl, FormBuilder, FormControl,FormGroup,ReactiveFormsModule, Validators} from '@angular/forms';
+import{AbstractControl,FormBuilder, FormControl,FormGroup,ReactiveFormsModule, Validators} from '@angular/forms';
 import { ModalComponent } from '../modal/modal.component';
 import moment from 'moment';
 import { DetailsCurriculumComponent } from "../details-curriculum/details-curriculum.component";
@@ -19,14 +19,12 @@ import { DetailsTipskillComponent } from '../details-tipskill/details-tipskill.c
     styleUrl: './details-employee.component.css',
     imports: [CommonModule, ReactiveFormsModule, ModalComponent, DetailsCurriculumComponent,DetailsTipskillComponent]
 })
-export class DetailsEmployeeComponent {
-  modificaAreaPersonale:boolean;
-  route:ActivatedRoute=inject(ActivatedRoute);
-  nazionalityService=inject(NationalityServiceService);
-  employeeService=inject(EmployeeServiceService);  
-  id=Number(this.route.snapshot.params['id']);
-  employee:EmployeeInterface= {
-    idDipendente:this.id,
+export class DetailsEmployeeComponent implements OnInit{
+  public modificaAreaPersonale!: boolean;
+  public route:ActivatedRoute=inject(ActivatedRoute);
+  public id!: number;
+  public employee:EmployeeInterface= {
+    idDipendente:-1,
     nome: undefined,
     cognome: undefined,
     dataDiNascita: undefined,
@@ -37,9 +35,9 @@ export class DetailsEmployeeComponent {
     skills:undefined,
     refNazionalita:undefined,
     curriculum:undefined
-}
-  nazionalitaList:RefNationality[]|undefined;
-  form = new FormGroup({
+  }
+  public nazionalitaList:RefNationality[]|undefined;
+  public form = new FormGroup({
     nome: new FormControl(''),
     cognome: new FormControl(''),
     dataDiNascita: new FormControl(''),
@@ -48,19 +46,20 @@ export class DetailsEmployeeComponent {
     indirizzo: new FormControl(''),
     refNazionalita: new FormControl(''),
   });
-  submitted = false;
-  showModal = false;
-  dataSharingService:DataSharingService=inject(DataSharingService);
-  constructor(private router: Router, private FormBuilder:FormBuilder) {    
-    this.employeeService.getEmployeeById(this.id).then(x=>{this.employee=x;});
-    this.nazionalityService.gettAllNationality().then(x=>{this.nazionalitaList=x});
-    this.modificaAreaPersonale=false;
-    this.passID();
-  }
+  public submitted!: boolean;
+  public showModal!: boolean;
   
-  passID() {
-    this.dataSharingService.employeeID=this.id;
-  }
+  
+
+
+  constructor(private formBuilder: FormBuilder,
+    private router: Router,
+    private nazionalityService: NationalityServiceService,
+    private employeeService: EmployeeServiceService,
+    private dataSharingService: DataSharingService,
+  ) {}
+  
+
 
   dateValidation(minAge: number){ 
     return (control:AbstractControl):{[key:string]:any} | null => {
@@ -75,20 +74,34 @@ export class DetailsEmployeeComponent {
       }
       return null
     }
-    }
+  }
 
-    ngOnInit()  {
-        this.form = this.FormBuilder.group({
-        nome: ['',[Validators.required,Validators.minLength(3)]],
-        cognome: ['',[Validators.required,Validators.minLength(3)]],
-        dataDiNascita: ['',[Validators.required,this.dateValidation(18)]],
-        matricola: [''],
-        citta: ['',Validators.required],
-        indirizzo: ['',Validators.required],
-        refNazionalita: ['',Validators.required],
-      })
-    }
+  ngOnInit(){
+    this.id=Number(this.route.snapshot.params['id']);
+    this.submitted = false;
+    this.showModal = false;
+    this.employeeService.getEmployeeById(this.id).then((x)=>{
+      this.dataSharingService.updateData(x);
+    });
+    this.modificaAreaPersonale=false;
+    this.nazionalityService.gettAllNationality().then(x=>{this.nazionalitaList=x});
 
+    this.employee = this.dataSharingService.data;
+    this.dataSharingService.data$.subscribe((newEmployee) => {
+      this.employee = newEmployee;
+    });
+
+    this.form =this.formBuilder.group({
+      nome: ['',[Validators.required,Validators.minLength(3)]],
+      cognome: ['',[Validators.required,Validators.minLength(3)]],
+      dataDiNascita: ['',[Validators.required,this.dateValidation(18)]],
+      matricola: [''],
+      citta: ['',Validators.required],
+      indirizzo: ['',Validators.required],
+      refNazionalita: ['',Validators.required],
+    })
+  }
+  
   ModificaDipendente()  {
     this.submitted = true
     if(this.form.invalid){
@@ -110,8 +123,9 @@ export class DetailsEmployeeComponent {
       },
       curriculum:undefined
     }
-    console.log(employee)
-    console.log(this.form.value);
+    //console.log(this.employee)
+    //console.log(this.dataSharingService.employee);
+    //console.log(this.form.value);
     this.employeeService.patchEmployeeById(employee).then(response=>{
       //if(resposne.ok) è equivalente a
       if(response.status==200){
@@ -129,15 +143,11 @@ export class DetailsEmployeeComponent {
   }
 
   ModificaArea():void  {
-    if(this.modificaAreaPersonale==false)  {
-      this.modificaAreaPersonale=true;
-      return;
-    }
-    this.modificaAreaPersonale=false;    
+    this.modificaAreaPersonale=!this.modificaAreaPersonale;    
   }
 
   CancellaDipendete() {
-    this.employeeService.deleteEmployeeById(this.id).then(response=>{
+    this.employeeService.deleteEmployeeById(this.employee.idDipendente).then(response=>{
       //if(resposne.ok) è equivalente a
       if(response.status==200)
       {

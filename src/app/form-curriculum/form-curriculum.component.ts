@@ -1,8 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CurriculumServiceService } from '../service/curriculum-service.service';
 import { DataSharingService } from '../service/data-sharing-service.service';
-import { FileUpload } from '../interface/fileupload';
+import { FileUpload } from '../interface/fileUpload';
+import { EmployeeInterface } from '../interface/employeeInterface';
+
 
 @Component({
   selector: 'app-form-curriculum',
@@ -11,14 +13,20 @@ import { FileUpload } from '../interface/fileupload';
   templateUrl: './form-curriculum.component.html',
   styleUrls: ['./form-curriculum.component.css']
 })
-export class FormCurriculumComponent {
-  selectedFiles: FileUpload[] = [];
-  dataSharingService: DataSharingService=inject(DataSharingService);
-  curriculumService: CurriculumServiceService=inject(CurriculumServiceService);
-  employeeID = this.dataSharingService.employeeID;
+export class FormCurriculumComponent implements OnInit{
+  employee!:EmployeeInterface;
+  public selectedFiles: FileUpload[]=[]
 
-  constructor() {
-  }
+  constructor(private dataSharingService: DataSharingService,
+    private curriculumService: CurriculumServiceService,
+    ) {  }
+
+    ngOnInit(): void {
+      this.employee = this.dataSharingService.data;
+      this.dataSharingService.data$.subscribe((newEmployee) => {
+        this.employee = newEmployee;
+      });
+    }
 
   onFileChange(event: any) {
     const fileList: FileList = event.target.files;
@@ -33,7 +41,7 @@ export class FormCurriculumComponent {
       alert('Please select a file');
       return;
     }
-    this.curriculumService.addCVsFromIDDipendente(this.employeeID, this.selectedFiles)
+    this.curriculumService.addCVsFromIDDipendente(this.dataSharingService.data.idDipendente, this.selectedFiles)
       .then((response) => {
         if (response.ok) {
           alert('Files uploaded successfully');

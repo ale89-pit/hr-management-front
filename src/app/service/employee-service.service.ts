@@ -1,16 +1,15 @@
-import { Injectable } from '@angular/core';
-import { EmployeeInterface } from '../interface/employeeInterface';
-import { EmployeeDTOInterface } from '../interface/employeeDTOInterface';
-import { EmployeeDTOInterfaceUpdate } from '../interface/employeeDTOInterfaceUpdate';
+import { Inject, Injectable } from "@angular/core";
+import { EmployeeInterface } from "../interface/employeeInterface";
+import { EmployeeDTOInterface } from "../interface/employeeDTOInterface";
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeServiceService {
+  public url:string="http://localhost:8080/dipendente";
 
-  url:string="http://localhost:8080/dipendente";
-  
-  costructor(){}
+  constructor(){}
 
   async getAllEmployees():  Promise<EmployeeInterface[]> {
     let url=this.url+`/diplist`;

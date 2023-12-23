@@ -1,11 +1,33 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { EmployeeInterface } from '../interface/employeeInterface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataSharingService {
-  public employeeID: number=-1;
-  public curriculumID: number=-1;
+  private dataSubject = new BehaviorSubject<EmployeeInterface>(
+    {
+      idDipendente:-1,
+      nome: undefined,
+      cognome: undefined,
+      dataDiNascita: undefined,
+      matricola: undefined,
+      citta: undefined,
+      indirizzo: undefined,
+      rowExist:undefined,
+      skills:undefined,
+      refNazionalita:undefined,
+      curriculum:undefined
+    }
+  );
+  public data$ = this.dataSubject.asObservable();
 
-  constructor() { }
+  get data(): EmployeeInterface {
+    return this.dataSubject.getValue();
+  }
+
+  updateData(newData: EmployeeInterface) {
+    this.dataSubject.next(newData);
+  }
 }

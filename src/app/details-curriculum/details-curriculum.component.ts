@@ -1,12 +1,11 @@
 import { CommonModule } from "@angular/common";
 import { FormCurriculumComponent } from "../form-curriculum/form-curriculum.component";
-import { Component, inject } from "@angular/core";
+import { Component,  OnInit } from "@angular/core";
 import { DataSharingService } from "../service/data-sharing-service.service";
-import { EmployeeServiceService } from "../service/employee-service.service";
-import { EmployeeInterface } from "../interface/employeeInterface";
 import { CurriculumServiceService } from "../service/curriculum-service.service";
 import {Router} from "@angular/router";
 import { FormTipskillComponent } from "../form-tipskill/form-tipskill.component";
+import { EmployeeInterface } from "../interface/employeeInterface";
 
 @Component({
     selector: 'app-details-curriculum',
@@ -15,38 +14,32 @@ import { FormTipskillComponent } from "../form-tipskill/form-tipskill.component"
     styleUrl: './details-curriculum.component.css',
     imports: [CommonModule,FormCurriculumComponent,FormTipskillComponent]
 })
-export class DetailsCurriculumComponent {
-  dataSharingService: DataSharingService=inject(DataSharingService);
-  employeeService:EmployeeServiceService=inject(EmployeeServiceService);
-  curriculumService=inject(CurriculumServiceService);
-  employee:EmployeeInterface= {
-    idDipendente:this.dataSharingService.employeeID,
-    nome: undefined,
-    cognome: undefined,
-    dataDiNascita: undefined,
-    matricola: undefined,
-    citta: undefined,
-    indirizzo: undefined,
-    rowExist:undefined,
-    skills:undefined,
-    refNazionalita:undefined,
-    curriculum:undefined
-}
-  showForm = false;
-  constructor(private router: Router) {
-    this.employeeService.getEmployeeById(this.employee.idDipendente).then(x=>{this.employee=x;});
-    console.log(this.employee.curriculum)
+export class DetailsCurriculumComponent implements OnInit{
+  showForm!: boolean;
+  employee!:EmployeeInterface;
+  
+  constructor(private router: Router,
+    private dataSharingService: DataSharingService,
+    private curriculumService: CurriculumServiceService,
+    ) {}
+    
+  ngOnInit(): void {
+    this.employee = this.dataSharingService.data;
+    this.dataSharingService.data$.subscribe((newEmployee) => {
+      this.employee = newEmployee;
+    }); 
+    this.showForm=false;
   }
   
   deleteCurriculum(id:number)
   {
-    if(this.employee.curriculum!=undefined){
+    if(this.dataSharingService.data.idDipendente!=-1){
       this.curriculumService.deleteCVsFromID(id).then(response=>{
         //if(resposne.ok) è equivalente a
         if(response.status==200)
         {
           alert("CV cancellato!");
-          this.router.navigate(['details/'+this.employee?.idDipendente]);
+          this.router.navigate(['details/'+this.dataSharingService.data.idDipendente]);
         }
       });
     }
