@@ -1,18 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { DetailsTipskillComponent } from './details-tipskill.component';
+import{DetailsCompetenzeComponent} from './details-competenze.component';
 
 describe('DetailsTipskillComponent', () => {
-  let component: DetailsTipskillComponent;
-  let fixture: ComponentFixture<DetailsTipskillComponent>;
+  let component: DetailsCompetenzeComponent;
+  let fixture: ComponentFixture<DetailsCompetenzeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DetailsTipskillComponent]
+      imports: [DetailsCompetenzeComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(DetailsTipskillComponent);
+    fixture = TestBed.createComponent(DetailsCompetenzeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

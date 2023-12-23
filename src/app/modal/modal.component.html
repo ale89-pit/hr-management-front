@@ -7,12 +7,13 @@
             </path>
             <rect width="32" height="136" x="240" y="112"></rect>
             <rect width="32" height="32" x="240" y="280"></rect>
-        </svg>Dipenente Aggiunto correttamente!!
+        </svg>{{messaggio}}
     </h2>
 
-    <div class="flex flex-col justify-end gap-3 mt-6 sm:flex-row">
-
+    <div class="flex items-center justify-center space-x-4">
         <button class="px-6 py-2 rounded-sm shadow-sm dark:bg-blue-600 dark:text-gray-50"
-            (click)="onCloseModal()">Ok</button>
+        (click)="notOkCloseModal()">Annulla</button>
+        <button class="px-6 py-2 rounded-sm shadow-sm dark:bg-blue-600 dark:text-gray-50"
+            (click)="okCloseModal()">Ok</button>
     </div>
 </div>

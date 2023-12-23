@@ -21,7 +21,7 @@
             <app-form-tipskill></app-form-tipskill>
     </div>
 </ng-container>
-<ng-container *ngIf="!employee?.curriculum">
+<ng-container *ngIf="employee?.curriculum?.length===0">
     <div>
         <p>Non ci sono curriculum, aggiungine uno!</p>
     </div>

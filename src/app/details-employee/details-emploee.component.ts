@@ -10,14 +10,14 @@ import { ModalComponent } from '../modal/modal.component';
 import moment from 'moment';
 import { DetailsCurriculumComponent } from "../details-curriculum/details-curriculum.component";
 import { DataSharingService } from '../service/data-sharing-service.service';
-import { DetailsTipskillComponent } from '../details-tipskill/details-tipskill.component';
+import { DetailsCompetenzeComponent } from '../details-competenze/details-competenze.component';
 
 @Component({
     selector: 'app-details',
     standalone: true,
     templateUrl: './details-employee.component.html',
     styleUrl: './details-employee.component.css',
-    imports: [CommonModule, ReactiveFormsModule, ModalComponent, DetailsCurriculumComponent,DetailsTipskillComponent]
+    imports: [CommonModule, ReactiveFormsModule, ModalComponent, DetailsCurriculumComponent,DetailsCompetenzeComponent]
 })
 export class DetailsEmployeeComponent implements OnInit{
   public modificaAreaPersonale!: boolean;
