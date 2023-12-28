@@ -1,21 +1,39 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ModalContent, ModalInterface } from '../interface/modalInterface';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-modal',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.css'
 })
 export class ModalComponent {
-  @Input() messaggio!: string;
-  @Output() close: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Input() finestra:ModalContent={
+    messaggio: undefined,
+    avviso: undefined,
+    tipo: undefined
+  }
+  ritorno:ModalInterface={
+    conferma: undefined,
+    tipo: undefined
+  }
+  @Output() close: EventEmitter<ModalInterface> = new EventEmitter<ModalInterface>();
 
   okCloseModal() {
-    this.close.emit(true)
+    this.ritorno = {
+      conferma: true,
+      tipo: this.finestra.tipo
+    }
+    this.close.emit(this.ritorno)
   }
   notOkCloseModal() {
-    this.close.emit(false)
+    this.ritorno = {
+      conferma: false,
+      tipo: this.finestra.tipo
+    }
+    this.close.emit(this.ritorno)
   }
 
 }

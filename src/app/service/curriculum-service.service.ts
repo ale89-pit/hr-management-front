@@ -1,11 +1,11 @@
-import { Inject, Injectable} from '@angular/core';
+import { Injectable} from '@angular/core';
 import { FileUpload } from '../interface/fileUpload';
 @Injectable({
   providedIn: 'root'
 })
 export class CurriculumServiceService {
   public key:string="curriculum";
-  public url: string="http://localhost:8080";
+  public url: string="http://localhost:8080/curriculum";
 
   constructor() { }
 
@@ -24,13 +24,44 @@ export class CurriculumServiceService {
       }) 
       
   }
+
   async deleteCVsFromID(id:number|undefined): Promise<any> {
     let url=this.url+`/deleteCVsFromID/${id}`;
-      return await fetch(url, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })   
+    return await fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+  }
+ 
+  decodeBase64String(base64String: string): Promise<string> {
+    const decodedData = atob(base64String);
+    const byteArray = new Uint8Array(decodedData.length);
+    for (let i = 0; i < decodedData.length; i++) {
+      byteArray[i] = decodedData.charCodeAt(i);
+    }
+    const blob = new Blob([byteArray], { type: 'application/octet-stream' });
+  
+    return new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const text = reader.result as string;
+        resolve(text);
+      };
+      reader.onerror = reject;
+      reader.readAsText(blob);
+    });
+  }
+
+  async encodeBase64String(id:number,stringa: string): Promise<any> {
+    const formData=new FormData();
+    const blob =new Blob([stringa], { type: 'text/plain' });
+    formData.append('file',blob,'astrubale.txt');
+    let url=this.url+`/updateBlobCvFromID/${id}`;
+    return await fetch(url, {
+      method: 'PATCH',
+      body:formData
+    })
   }
 }

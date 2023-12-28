@@ -1,5 +1,5 @@
-<div class="flex flex-col max-w-md gap-2 p-6 rounded-md shadow-md dark:bg-gray-50 dark:text-gray-800">
-    <h2 class="flex items-center gap-2 text-xl font-semibold leadi tracki">
+<div class="flex flex-col max-w-md gap-2 p-6 rounded-md shadow-lg dark:bg-gray-200 dark:text-gray-800">
+    <div class="flex items-center gap-2 text-xl font-semibold leadi tracki">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
             class="w-6 h-6 fill-current shrink-0 dark:text-blue-600">
             <path
@@ -7,13 +7,20 @@
             </path>
             <rect width="32" height="136" x="240" y="112"></rect>
             <rect width="32" height="32" x="240" y="280"></rect>
-        </svg>{{messaggio}}
-    </h2>
+        </svg>
+        <div>
+            <div class="bg-yellow-200 p-4 rounded-md" *ngIf="finestra.avviso">
+                <p class="text-yellow-800 font-semibold">Avviso:</p>               
+                <p>{{finestra.avviso}}</p>
+            </div>
+            <div class="p-4">
+                <p>{{finestra.messaggio}}</p>
+              </div>
+        </div>
+    </div>
 
     <div class="flex items-center justify-center space-x-4">
-        <button class="px-6 py-2 rounded-sm shadow-sm dark:bg-blue-600 dark:text-gray-50"
-        (click)="notOkCloseModal()">Annulla</button>
-        <button class="px-6 py-2 rounded-sm shadow-sm dark:bg-blue-600 dark:text-gray-50"
-            (click)="okCloseModal()">Ok</button>
+        <button class="px-4 py-2 rounded bg-green-500 text-white hover:bg-blue-600 focus:outline-none transition-colors" (click)="notOkCloseModal()">Annulla</button>
+        <button class="px-4 py-2 rounded bg-green-500 text-white hover:bg-blue-600 focus:outline-none transition-colors" (click)="okCloseModal()">Ok</button>
     </div>
 </div>

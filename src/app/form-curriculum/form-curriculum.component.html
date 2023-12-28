@@ -17,7 +17,7 @@
                 </div>
         </div>
     </div>
-    <!--<div class="fixed top-[25%] right-[25%]" [ngClass]="{ 'hidden': !showModal }">
-        <app-modal (close)="closeModal()"></app-modal>
-    </div>-->
+    <div class="fixed top-[25%] right-[25%]" [ngClass]="{ 'hidden': !showModal }">
+        <app-modal (close)="closeModal($event)" [finestra]="alert"></app-modal>
+    </div>
 </div>
