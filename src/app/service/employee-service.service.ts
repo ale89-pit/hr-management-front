@@ -1,6 +1,8 @@
 import { Inject, Injectable } from "@angular/core";
 import { EmployeeInterface } from "../interface/employeeInterface";
 import { EmployeeDTOInterface } from "../interface/employeeDTOInterface";
+import { Page } from "../interface/pageInterface";
+
 
 
 @Injectable({
@@ -9,12 +11,14 @@ import { EmployeeDTOInterface } from "../interface/employeeDTOInterface";
 export class EmployeeServiceService {
   public url:string="http://localhost:8080/dipendente";
 
-  constructor(){}
 
-  async getAllEmployees():  Promise<EmployeeInterface[]> {
-    let url=this.url+`/diplist`;
+
+  constructor() {}
+
+  async getAllEmployees(page:number):  Promise<Page<EmployeeInterface>> {
+    let url=this.url+`/diplistpage?page=${page}`;
     const data = await fetch(url);
-    return await data.json() ?? [];
+    return await data.json() ?? { content: [], totalPages: 0, totalElements: 0, size: 0, number: 0 };
   }
 
   async addEmployee(employee: EmployeeDTOInterface): Promise<EmployeeDTOInterface> {

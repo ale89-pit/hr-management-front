@@ -2,7 +2,8 @@ import {SkillsInterface} from '../interface/skillsInteface'
 import { CurriculumInterface } from './curriculumInterface'
 import { RefNationality } from './refNationalitaInterface';
 
-export interface EmployeeInterface {//null per associare i form e undefined per inizialiazzare employee
+export interface EmployeeInterface {
+    //null per associare i form e undefined per inizialiazzare employee
     idDipendente: number,
     nome: string|null|undefined,
     cognome: string|null|undefined,
@@ -14,4 +15,5 @@ export interface EmployeeInterface {//null per associare i form e undefined per 
     skills:SkillsInterface[]|null|undefined,
     refNazionalita:RefNationality|null|undefined,
     curriculum:CurriculumInterface[]|null|undefined,
+
 }

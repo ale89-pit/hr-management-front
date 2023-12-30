@@ -7,17 +7,14 @@
         <div class="flex align-center justify-end">
             <label class="py-1 my-3 mx-3 bold">Aggiungi dipendente</label>
             <button type="button" class="px-3 py-1 my-3 font-semibold rounded-full bg-gray-300 dark:text-gray-800 flex"
-                (click)="toggle()"><span class="material-symbols-outlined">add
-
-                </span></button>
+                (click)="toggle()">
+                <span class="material-symbols-outlined">add</span>
+            </button>
         </div>
         <ng-template [ngIf]="showForm">
-
             <app-form-employee></app-form-employee>
-
         </ng-template>
     </div>
-
 
     <div class="container p-2 mx-auto rounded-md sm:p-4 my-5 dark:text-gray-100 dark:bg-gray-900">
         <h2 class="mb-3 text-2xl font-semibold leadi">Standings</h2>
@@ -35,13 +32,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let employee of employees"
+                    <tr *ngFor="let employee of employeesList"
                         class="text-right border-b border-opacity-20 dark:border-gray-700 dark:bg-gray-800">
                         <td class="px-3 py-2 text-left">
                             <span>{{employee.matricola}}</span>
                         </td>
                         <td class="px-3 py-2">
-                            <span>{{ employee.nome}}</span>
+                            <span>{{employee.nome}}</span>
                         </td>
                         <td class="px-3 py-2">
                             <span>{{employee.cognome}}</span>
@@ -60,9 +57,9 @@
                                 [routerLink]="['/details', employee.idDipendente]">Dettagli</a>
                         </td>
                     </tr>
+                </tbody>
             </table>
         </div>
+        <app-page [totalPages]="totalPages" [currentPage]="currentPage" (pageChange)="changePage($event)"></app-page>
     </div>
-
-
 </div>
