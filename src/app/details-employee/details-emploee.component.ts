@@ -11,6 +11,7 @@ import moment from 'moment';
 import { DetailsCurriculumComponent } from "../details-curriculum/details-curriculum.component";
 import { DataSharingService } from '../service/data-sharing-service.service';
 import { DetailsCompetenzeComponent } from '../details-competenze/details-competenze.component';
+import { ModalContent, ModalInterface, Opzioni } from '../interface/modalInterface';
 
 @Component({
     selector: 'app-details',
@@ -19,7 +20,12 @@ import { DetailsCompetenzeComponent } from '../details-competenze/details-compet
     styleUrl: './details-employee.component.css',
     imports: [CommonModule, ReactiveFormsModule, ModalComponent, DetailsCurriculumComponent,DetailsCompetenzeComponent]
 })
-export class DetailsEmployeeComponent implements OnInit{
+export class DetailsEmployeeComponent implements OnInit{  
+  alert:ModalContent={
+    messaggio:"empty message",
+    avviso: "Error: initialize message",
+    tipo: undefined
+  }
   public modificaAreaPersonale!: boolean;
   public route:ActivatedRoute=inject(ActivatedRoute);
   public id!: number;
@@ -46,10 +52,8 @@ export class DetailsEmployeeComponent implements OnInit{
     indirizzo: new FormControl(''),
     refNazionalita: new FormControl(''),
   });
-  public submitted!: boolean;
   public showModal!: boolean;
-  
-  
+
 
 
   constructor(private formBuilder: FormBuilder,
@@ -59,8 +63,6 @@ export class DetailsEmployeeComponent implements OnInit{
     private dataSharingService: DataSharingService,
   ) {}
   
-
-
   dateValidation(minAge: number){ 
     return (control:AbstractControl):{[key:string]:any} | null => {
       const inputValue = control.value;
@@ -78,18 +80,23 @@ export class DetailsEmployeeComponent implements OnInit{
 
   ngOnInit(){
     this.id=Number(this.route.snapshot.params['id']);
-    this.submitted = false;
     this.showModal = false;
-    this.employeeService.getEmployeeById(this.id).then((x)=>{
-      this.dataSharingService.updateData(x);
-    });
     this.modificaAreaPersonale=false;
-    this.nazionalityService.gettAllNationality().then(x=>{this.nazionalitaList=x});
 
-    this.employee = this.dataSharingService.data;
     this.dataSharingService.data$.subscribe((newEmployee) => {
       this.employee = newEmployee;
     });
+    this.nazionalityService.gettAllNationality().then(x=>{
+      this.nazionalitaList=x;
+    }).catch(error=>{
+      console.log("ERROR gettAllNationality(...) call: "+error);
+    });
+    this.employeeService.getEmployeeById(this.id).then((x)=>{
+      this.dataSharingService.updateData(x);
+      this.employee=x
+    }).catch(error=>{
+      console.log("ERROR getEmployeeById(...) call: "+error);
+    });   
 
     this.form =this.formBuilder.group({
       nome: ['',[Validators.required,Validators.minLength(3)]],
@@ -98,48 +105,19 @@ export class DetailsEmployeeComponent implements OnInit{
       matricola: [''],
       citta: ['',Validators.required],
       indirizzo: ['',Validators.required],
-      refNazionalita: ['',Validators.required],
+      refNazionalita: [String(this.employee.refNazionalita?.idRefNazionalita),Validators.required],
     })
   }
   
   ModificaDipendente()  {
-    this.submitted = true
-    if(this.form.invalid){
-      return
-    }
-    let employee:EmployeeInterface= {
-      idDipendente: this.employee.idDipendente,
-      nome: this.form.value.nome,
-      cognome: this.form.value.cognome,
-      dataDiNascita: this.form.value.dataDiNascita,
-      matricola: this.employee.matricola,
-      citta: this.form.value.citta,
-      indirizzo: this.form.value.indirizzo,
-      rowExist:undefined,
-      skills:undefined,
-      refNazionalita:{
-        idRefNazionalita:10,
-        nazionalita:undefined,
-      },
-      curriculum:undefined
-    }
-    //console.log(this.employee)
-    //console.log(this.dataSharingService.employee);
-    //console.log(this.form.value);
-    this.employeeService.patchEmployeeById(employee).then(response=>{
-      //if(resposne.ok) è equivalente a
-      if(response.status==200){
-        alert("Dipendente modificato!");
-        if(employee.nome) this.employee.nome=employee.nome;
-        if(employee.cognome) this.employee.cognome=employee.cognome;
-        if(employee.dataDiNascita) this.employee.dataDiNascita=employee.dataDiNascita;
-        if(employee.matricola) this.employee.matricola=employee.matricola;
-        if(employee.citta) this.employee.citta=employee.citta;
-        if(employee.indirizzo) this.employee.indirizzo=employee.indirizzo;
-        if(employee.refNazionalita) this.employee.refNazionalita=employee.refNazionalita;
-        this.modificaAreaPersonale=false;
+    if(!this.form.invalid){
+      this.alert={
+        messaggio:"Vuoi continuare?",
+        avviso: "Attenzione stai per modificare i dati personali del dipendente",
+        tipo: Opzioni.Modifica
       }
-    })
+      this.showModal = true;
+    }
   }
 
   ModificaArea():void  {
@@ -147,18 +125,95 @@ export class DetailsEmployeeComponent implements OnInit{
   }
 
   CancellaDipendete() {
-    this.employeeService.deleteEmployeeById(this.employee.idDipendente).then(response=>{
-      //if(resposne.ok) è equivalente a
-      if(response.status==200)
-      {
-        alert("Dipendente cancellato!");
-        this.router.navigate(['']);
-      }
-    });
+    this.alert={
+      messaggio:"Vuoi continuare?",
+      avviso: "Attenzione la cancellazione del dipendente comporta la cancellazione di tutti i cv e le competenze collegate",
+      tipo: Opzioni.Cancella
+    }
+    this.showModal = true;
   }
 
-  closeModal(){
-    console.log("ciao")
+  closeModal(conferma:ModalInterface){
+    if(conferma.conferma){
+      switch(conferma.tipo){
+        case(Opzioni.Cancella):{
+          this.employeeService.deleteEmployeeById(this.employee.idDipendente).then(response=>{
+            //if(resposne.ok) è equivalente a
+            if(response.status==200)
+            {
+              //alert("Dipendente cancellato!");
+              this.router.navigate(['']);
+            }
+          }).catch(error=>{
+            console.log("ERROR deleteEmployeeById(...) call: "+error);
+          });
+          break;
+        }
+        case(Opzioni.Modifica):{
+          let employee:EmployeeInterface= {
+            idDipendente: this.employee.idDipendente,
+            nome: this.form.value.nome,
+            cognome: this.form.value.cognome,
+            dataDiNascita: this.form.value.dataDiNascita,
+            matricola: this.employee.matricola,
+            citta: this.form.value.citta,
+            indirizzo: this.form.value.indirizzo,
+            rowExist:undefined,
+            skills:undefined,
+            refNazionalita:this.nazionalitaList?.find(x=>x.idRefNazionalita==this.form.value.refNazionalita),//non so perche non riesco ad accedere al valore della select impostandolo come oggetto. Ho preferito tagliare la testa al toro, troppo tempo buttato
+            curriculum:undefined
+          }
+          //console.log(employee)
+          //console.log(this.nazionalitaList?.find(x=>x.idRefNazionalita==this.form.value.refNazionalita))
+          //console.log(this.dataSharingService.employee);
+          //console.log(this.form.value.refNazionalita);
+          //console.log(typeof this.form.value.refNazionalita);
+          this.employeeService.patchEmployeeById(employee).then(response=>{
+            //if(resposne.ok) è equivalente a
+            if(response.status==200)
+            {
+              this.employeeService.getEmployeeById(this.dataSharingService.data.idDipendente).then((x)=>{//console.log(x)
+              this.dataSharingService.updateData(x);
+              this.employee=x
+              }).catch(error=>{
+                console.log("ERROR getEmployeeById(...) call: "+error);
+              });
+            }
+            }).catch(error=>{
+              console.log("ERROR patchEmployeeById(...) call: "+error);
+          });
+          this.modificaAreaPersonale=!this.modificaAreaPersonale //in altri esempio , come la cancellazione del curriculm , questa riga non serve. Sono rimasto un po' perplesso a causa di questa select. Ho preferito tagliare la testa al toro, troppo tempo buttato
+          break;
+        }
+        
+      }
+        
+    }
     this.showModal = false
   }
+
+  /* esempio di sviluppo
+  myForm!: FormGroup;
+  defaultOption!:{id:number,name:string};
+  options = [
+    { id: 1, name: 'Opzione 1' },
+    { id: 2, name: 'Opzione 2' },
+    { id: 3, name: 'Opzione 3' },
+    { id: 4, name: 'Opzione 4' },
+    { id: 5, name: 'Opzione 5' },
+    { id: 6, name: 'Opzione 6' }
+
+  
+  constructor(
+    defaultOption={ id: 2, name: 'Opzione 2' }
+    this.form=this.formBuilder.group({
+      selectedOption: [defaultOption]
+    })
+  )
+  submitForm() {
+    const s = this.myForm.value.selectedOption;
+    console.log(s)
+  }
+  */
+
 }

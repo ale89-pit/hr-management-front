@@ -1,1 +1,61 @@
-<p>form-tipskill works!</p>
+<hr>
+<div>
+    <div class="flex flex-wrap">
+        <button class="flex items-center justify-center p-2" (click)="ShowForm()">  
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+        </button>
+        <h1  class="flex items-center">aggiungi competenza</h1>  
+    </div>
+    <div>
+            <form [formGroup]="form" (ngSubmit)="submitForm()"  *ngIf="showForm">
+                <div>
+                    <div>
+                        <input type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded-sm" formControlName="selectAll" (change)="toggleSelectAll()">
+                        <label class="ml-2 text-gray-700">Seleziona / deseleziona tutto</label>
+                    </div>
+                </div>
+                <div formArrayName="checkboxes">
+                    <div *ngFor="let skill of allTipskills; let i = index">
+                        <span class="flex items-left pl-3">
+                            <input type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded-sm" [formControlName]="i" (change)="updateCheckboxSelection()" [disabled]="skill.isCheckedByDefault ?? false">
+                            <label class="ml-2 text-gray-700">{{skill.tipologiaSkill}}</label>
+                        </span>
+                    </div>
+                </div>
+                <div *ngIf="!isAtLeastOneCheckboxSelected"  class="text-red-500">
+                    <p>At least one skill is required</p>
+                </div>
+                <div class="flex justify-center">
+                    <button type="submit" class="px-4 py-2 rounded bg-green-500 text-white hover:bg-blue-600 focus:outline-none transition-colors">Invia</button>
+                </div>
+            </form>
+          <!--esempio di sviluppo
+          <form [formGroup]="form" (ngSubmit)="submitForm()">
+            <div>
+                <label>
+                <input type="checkbox" formControlName="selectAll" (change)="toggleSelectAll()">
+                Seleziona tutto
+                </label>
+            </div>
+            <div formArrayName="checkboxes">
+                <div *ngFor="let checkbox of checkboxes.controls; let i = index">
+                <label>
+                    <input type="checkbox" [formControlName]="i" (change)="updateCheckboxSelection()">
+                    Checkbox {{ i + 1 }}
+                </label>
+                <button type="button" (click)="removeCheckbox(i)">Rimuovi</button>
+                </div>
+            </div>
+            <button type="button" (click)="addCheckbox()">Aggiungi Casella di Controllo</button>
+            <div *ngIf="!isAtLeastOneCheckboxSelected && form.controls['checkboxes'].touched">
+                <p class="error-message">Almeno una casella di controllo deve essere selezionata.</p>
+            </div>
+            <button type="submit">Invia</button>
+            </form>-->
+    </div>
+    <div class="fixed top-[25%] right-[25%]" [ngClass]="{ 'hidden': !showModal }">
+        <app-modal (close)="closeModal($event)" [finestra]="alert"></app-modal>
+    </div>
+</div>
