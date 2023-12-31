@@ -1,10 +1,14 @@
-<hr>
-<div class="inline-flex">
+<div class=" dark:bg-gray-400">
+<p class="font-bold">Area personale:</p>
+<div class="flex justify-center w-screen">
+<div class="bg-gray-200 dark:bg-gray-300 text-gray-800 shadow-lg py-2 px-4 rounded-lg p-2 m-2" >
     <div>
+        <h1 class="font-bold">ID:  {{id}}</h1><hr> 
+    </div>
+    <div class="flex">        
         <ng-container *ngIf="!modificaAreaPersonale; then areaPersonale else formModificaAreaPersonale"></ng-container>
         <ng-template #areaPersonale>
-            <section>
-                <h1>Area personale ID:  {{id}}</h1>
+            <div class="flex-wrap">
                 <ul>
                     <li>matricola: {{ employee?.matricola }}</li>
                     <li>nome: {{ employee?.nome }}</li>
@@ -14,49 +18,58 @@
                     <li>citta: {{ employee?.citta }}</li>
                     <li>nazionalita: {{ employee?.refNazionalita?.nazionalita}}</li>
                 </ul>
-            </section>
+            </div>
         </ng-template>
         <ng-template #formModificaAreaPersonale>
-            <form [formGroup]="form" (submit)="ModificaDipendente()">
-                <fieldset>
-                    <legend><h1>Area personale ID:  {{id}}</h1></legend>
-                    <ul>
-                        <li>matricola: {{ employee?.matricola }}</li>
-                        <li><label>nome:  </label><input type="text" placeholder="{{ employee?.nome }}" formControlName="nome" [ngModel]="employee?.nome">
-                            <div *ngIf="submitted && form.controls.nome.invalid" class="text-red-500">
-                                <p>First name is required</p>
+            <div class="flex-wrap">
+                <form [formGroup]="form" (submit)="ModificaDipendente()">
+                    <fieldset>
+                        <div class="p-2">
+                            matricola: {{ employee?.matricola }}
+                        </div>
+                        <div class="p-2">
+                            nome:  <input type="text" placeholder="{{ employee?.nome }}" formControlName="nome" [ngModel]="employee?.nome" class="rounded-lg">
+                                <div *ngIf="form.controls.nome.invalid" class="text-red-500">
+                                    <p>First name is required</p>
+                                </div>
                             </div>
-                        </li>
-                        <li><label>cognome:  </label><input type="text" placeholder="{{ employee?.cognome }}" formControlName="cognome" [ngModel]="employee?.cognome">
-                            <div *ngIf="submitted && form.controls.cognome.invalid" class="text-red-500">
-                                <p>Last name is required</p>
+                            <div class="p-2">
+                            cognome:  <input type="text" placeholder="{{ employee?.cognome }}" formControlName="cognome" [ngModel]="employee?.cognome" class="rounded-lg">
+                                <div *ngIf="form.controls.cognome.invalid" class="text-red-500">
+                                    <p>Last name is required</p>
+                                </div>
                             </div>
-                        </li>
-                        <li><label>data di nascita:  </label><input type="date" defaultValue="{{ employee?.dataDiNascita }}" formControlName="dataDiNascita" [ngModel]="employee?.dataDiNascita">
-                            <div *ngIf="submitted && (form.controls.dataDiNascita.invalid || form.controls.dataDiNascita.hasError('minAge'))" class="text-red-500">
-                                <p>Date of birth is required/invalid</p>
+                            <div class="p-2">
+                            <label>data di nascita:  </label><input type="date" defaultValue="{{ employee?.dataDiNascita }}" formControlName="dataDiNascita" [ngModel]="employee?.dataDiNascita" class="rounded-lg">
+                                <div *ngIf="(form.controls.dataDiNascita.invalid || form.controls.dataDiNascita.hasError('minAge'))" class="text-red-500">
+                                    <p>Date of birth is required/invalid</p>
+                                </div>
                             </div>
-                        </li>
-                        <li><label>indirizzo:  </label><input type="text" placeholder="{{ employee?.indirizzo }}" formControlName="indirizzo" [ngModel]="employee?.indirizzo">
-                            <div *ngIf="submitted && form.controls.indirizzo.invalid" class="text-red-500">
-                                <p>Address is required</p>
+                            <div class="p-2">
+                            indirizzo:  <input type="text" placeholder="{{ employee?.indirizzo }}" formControlName="indirizzo" [ngModel]="employee?.indirizzo" class="rounded-lg">
+                                <div *ngIf="form.controls.indirizzo.invalid" class="text-red-500">
+                                    <p>Address is required</p>
+                                </div>
                             </div>
-                        </li>
-                        <li><label>citta:  </label><input type="text" placeholder="{{ employee?.citta }}" formControlName="citta" [ngModel]="employee?.citta">
-                            <div *ngIf="submitted && form.controls.citta.invalid" class="text-red-500">
-                                <p>City is required</p>
+                            <div class="p-2">
+                            citta:  <input type="text" placeholder="{{ employee?.citta }}" formControlName="citta" [ngModel]="employee?.citta" class="rounded-lg">
+                                <div *ngIf="form.controls.citta.invalid" class="text-red-500">
+                                    <p>City is required</p>
+                                </div>
                             </div>
-                        </li>
-                        <li><label>nazionalita':</label>
-                            <select formControlName="refNazionalita" [ngModel]="employee?.refNazionalita">
-                                <option *ngFor="let obj of nazionalitaList" [ngValue]="obj.idRefNazionalita" [selected]="obj.nazionalita==employee?.refNazionalita?.nazionalita">{{obj.idRefNazionalita}}-{{obj.nazionalita}}</option>
-                            </select></li>
-                        <li><button type="submit">Submit</button></li>
-                    </ul>
-                </fieldset>
-            </form>
+                            <div class="p-2">
+                                nazionalita':
+                                <select formControlName="refNazionalita" class="rounded-lg" [ngModel]="employee?.refNazionalita?.idRefNazionalita">
+                                    <option *ngFor="let n of nazionalitaList" [value]="n.idRefNazionalita" [disabled]="n.idRefNazionalita===employee?.refNazionalita?.idRefNazionalita" class=" disabled:bg-gray-200">{{n.nazionalita}}</option>
+                                </select>
+                                <div class="flex justify-center pt-2">
+                                    <button type="submit" class="px-4 py-2 rounded bg-green-500 text-white hover:bg-blue-600 focus:outline-none transition-colors">Invia</button>
+                                </div>
+                            </div>
+                    </fieldset>
+                </form>
+            </div>
         </ng-template>
-    </div>
     <div>
         <button class="flex items-center justify-center p-2" (click)="ModificaArea()">
         <!-- icone su heroicons.com -->
@@ -70,12 +83,23 @@
             </svg>
         </button>
     </div>
+    </div>
     <div class="fixed top-[25%] right-[25%]" [ngClass]="{ 'hidden': !showModal }">
         <app-modal (close)="closeModal($event)" [finestra]="alert"></app-modal>
     </div>
+</div>
 </div>
 <hr>
     <app-details-curriculum></app-details-curriculum>
 <hr>
     <app-details-competenze></app-details-competenze>
 <hr>
+
+<!--
+<form [formGroup]="myForm" (ngSubmit)="submitForm()">
+    <select formControlName="selectedOption">
+        <option *ngFor="let o of options" [value]="o.name" [disabled]="o.id== defaultOption.id">{{ o.name }}</option>
+    </select>
+    <button type="submit">Submit</button>
+</form>
+-->

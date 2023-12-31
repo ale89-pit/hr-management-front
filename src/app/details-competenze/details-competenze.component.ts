@@ -5,7 +5,6 @@ import { EmployeeInterface } from '../interface/employeeInterface';
 import { CompetenzeServiceService } from '../service/competenze-service.service';
 import { ModalComponent } from "../modal/modal.component";
 import { ModalContent, ModalInterface, Opzioni } from '../interface/modalInterface';
-import { Router } from '@angular/router';
 import { EmployeeServiceService } from '../service/employee-service.service';
 
 @Component({
@@ -25,7 +24,6 @@ export class DetailsCompetenzeComponent implements OnInit{
   employee!:EmployeeInterface;
   competenzaID!:number;
   constructor(private employeeService: EmployeeServiceService,
-    private router:Router,
     private dataSharingService: DataSharingService,
     private competenzeService: CompetenzeServiceService
     ) { }
@@ -65,7 +63,6 @@ export class DetailsCompetenzeComponent implements OnInit{
               }).catch(error=>{
                 console.log("ERROR getEmployeeById(...) call: "+error);
               });
-              this.router.navigate(['/details/'+this.dataSharingService.data.idDipendente]);
             }
           }).catch(error=>{
             console.log("ERROR deleteSkillByIdEmployeeIdTipskill(...) call: "+error);

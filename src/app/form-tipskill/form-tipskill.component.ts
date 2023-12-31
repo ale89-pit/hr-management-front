@@ -7,7 +7,6 @@ import { DataSharingService } from '../service/data-sharing-service.service';
 import { SkillsInterface } from '../interface/skillsInteface';
 import { ModalComponent } from '../modal/modal.component';
 import { EmployeeInterface } from '../interface/employeeInterface';
-import { Router } from '@angular/router';
 import { EmployeeServiceService } from '../service/employee-service.service';
 
 
@@ -35,7 +34,6 @@ export class FormTipskillComponent implements OnInit{
   isAtLeastOneCheckboxSelected!: boolean;
 
   constructor(private employeeService: EmployeeServiceService,
-    private router: Router,
     private tipskillService: TipskillServiceService,
     private formBuilder: FormBuilder,
     private dataSharingService: DataSharingService) { }
@@ -51,7 +49,7 @@ export class FormTipskillComponent implements OnInit{
       this.tipskillService.getTipskillsByEmployeeIDCvID(this.employee.idDipendente,this.cvID).then(y=>{
         this.allTipskills=x;//console.log(this.allTipskills);
         this.allTipskills.forEach(z=>{
-          z.isChecked=false;
+          //z.isChecked=false;
           //avrei preferito usare includes ma typescript mi dice che ha problemi con undefined type
           z.isCheckedByDefault=y.some(item => item.tipologiaSkill === z.tipologiaSkill);//console.log(z);
           const checkbox = this.formBuilder.control({ value: false, disabled: z.isCheckedByDefault??false});
@@ -65,7 +63,6 @@ export class FormTipskillComponent implements OnInit{
       console.log("ERROR getAllSkills(...) call: "+error);
     });
     this.idTipskills=[];
-    this.isAtLeastOneCheckboxSelected=false;
     this.form = this.formBuilder.group({
       selectAll: false,
       checkboxes: this.formBuilder.array([], Validators.required)
@@ -104,10 +101,6 @@ export class FormTipskillComponent implements OnInit{
     }
   }
 
-  aggiungiTipskill(){
-   
-  }
-
   ShowForm(){
     this.showForm=!this.showForm;
   }
@@ -128,7 +121,7 @@ export class FormTipskillComponent implements OnInit{
               this.idTipskills.push(x.idTipskill);
             }
           });//console.log(this.idTipskills);
-          console.log(this.cvID)
+          //console.log(this.cvID)
           this.tipskillService.addSkillsFromIDCV_2(this.cvID,this.idTipskills).then(response=>{
             if(response.status==200)
             {
@@ -138,7 +131,6 @@ export class FormTipskillComponent implements OnInit{
               }).catch(error=>{
                 console.log("ERROR getEmployeeById(...) call: "+error);
               });
-              this.router.navigate(['/details/'+this.dataSharingService.data.idDipendente]);
             }
           })
           break;

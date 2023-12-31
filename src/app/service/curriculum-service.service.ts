@@ -4,21 +4,21 @@ import { FileUpload } from '../interface/fileUpload';
   providedIn: 'root'
 })
 export class CurriculumServiceService {
-  public key:string="curriculum";
   public url: string="http://localhost:8080/curriculum";
 
   constructor() { }
 
-  async addCVsFromIDDipendente(id:number|undefined, selectedFiles: FileUpload[]): Promise<any> {
-    let url=this.url+`/esercizio_3/addCVsFromIDDipendente/${id}`;
+  async addCVsFromIDDipendente(id_dipendente:number, curriculumFile: FileUpload[]): Promise<any> {
+    const key:string="key";
+    let url=this.url+`/esercizio_3/addCVsFromIDDipendente/${id_dipendente}`;
       const formData = new FormData();
-      for (let file of selectedFiles) {
-        formData.append(this.key, file.file);
-      }      
+      for (let file of curriculumFile) {
+        formData.append(key, file.file,file.file.name);console.log(file.file)
+      }   
       return await fetch(url, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'multipart/form-data'
+  headers: {
+    'Content-Type': 'multipart/form-data; boundary=------------------------' + Math.random().toString(36).substring(7)
         },
         body: formData
       }) 
@@ -55,9 +55,10 @@ export class CurriculumServiceService {
   }
 
   async encodeBase64String(id:number,stringa: string): Promise<any> {
+    const key='0123456789';
     const formData=new FormData();
     const blob =new Blob([stringa], { type: 'text/plain' });
-    formData.append('file',blob,'astrubale.txt');
+    formData.append(key,blob,'astrubale.txt');
     let url=this.url+`/updateBlobCvFromID/${id}`;
     return await fetch(url, {
       method: 'PATCH',

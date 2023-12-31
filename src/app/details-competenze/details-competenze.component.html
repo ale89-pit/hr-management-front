@@ -2,7 +2,7 @@
     <ng-container *ngIf="employee?.skills?.length">
         <p class="font-bold">Competenze:</p>
         <div class="flex flex-wrap">
-            <div class=" bg-gray-300 dark:text-gray-800 shadow-lg py-2 px-4 rounded-lg p-2 m-2  flex items-center" *ngFor="let skill of employee?.skills">
+            <div class=" bg-gray-200 dark:bg-gray-300 text-gray-800 shadow-lg py-2 px-4 rounded-lg p-2 m-2  flex items-center" *ngFor="let skill of employee?.skills">
                 <span class="mr-2 font-bold">ID: {{ skill.idTipskill }}</span>
                 <span class="mr-2"> | {{ skill.tipologiaSkill }} | </span>
                 <span class="mr-2">

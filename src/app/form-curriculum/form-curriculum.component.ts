@@ -22,16 +22,20 @@ export class FormCurriculumComponent implements OnInit{
     tipo: undefined
   }
   employee!:EmployeeInterface;
+  isAtLeastOneCv!:boolean;
   public selectedFiles: FileUpload[]=[];
   public showModal!: boolean;
+  showForm!: boolean
 
   constructor(private dataSharingService: DataSharingService,
     private curriculumService: CurriculumServiceService
     ) {  }
 
     ngOnInit(): void {
+      this.showForm = false;
       this.showModal = false;
       this.employee = this.dataSharingService.data;
+      this.isAtLeastOneCv=false;
       this.dataSharingService.data$.subscribe((newEmployee) => {
         this.employee = newEmployee;
       });
@@ -39,30 +43,29 @@ export class FormCurriculumComponent implements OnInit{
 
   onFileChange(event: any) {
     const fileList: FileList = event.target.files;
+    this.selectedFiles = [];
     for (let i = 0; i < fileList.length; i++) {
       const fileUpload: FileUpload = { file: fileList[i], progress: 0 };
       this.selectedFiles.push(fileUpload);
     }
+    this.isAtLeastOneCv=this.selectedFiles.length>0;
   }
 
   uploadFiles(){
-    this.alert={
-      messaggio:"Vuoi continuare?",
-      avviso:undefined,
-      tipo: Opzioni.Aggiungi
+    if(this.selectedFiles.length> 0) {
+      this.alert={
+        messaggio:"Vuoi aggiungere un nuovo curriculum?",
+        avviso:undefined,
+        tipo: Opzioni.Aggiungi
+      }
+      this.showModal = true;
     }
-    this.showModal = true;
-
   }
   
   closeModal(conferma:ModalInterface)  {
     if(conferma.conferma){
       switch(conferma.tipo){
         case(Opzioni.Aggiungi):{
-          if(this.selectedFiles.length === 0) {
-            alert('Please select a file');
-            return;
-          }
           this.curriculumService.addCVsFromIDDipendente(this.dataSharingService.data.idDipendente, this.selectedFiles)
             .then((response) => {
               if (response.ok) {
@@ -74,13 +77,22 @@ export class FormCurriculumComponent implements OnInit{
           break;
         }
       }
-    }    
+    }
+    this.showModal = false
   }
+  
 
   removeFile(file: FileUpload) {
     const index = this.selectedFiles.indexOf(file);
     if (index !== -1) {
       this.selectedFiles.splice(index, 1);
     }
+    if(this.selectedFiles.length===0) {
+      this.isAtLeastOneCv=false;
+    }
+  }
+
+  ShowForm(){
+    this.showForm=!this.showForm;
   }
 }

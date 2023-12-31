@@ -18,34 +18,21 @@
 </div>
 -->
 
-
-<div class="border-solid border-2 border-grey-500 p-3">
-    <div class="flex align-center justify-end">
-        <label class="py-1 my-3 mx-3 bold">Informazioni curriculum</label>
-        <button type="button" class="px-3 py-1 my-3 font-semibold rounded-full bg-gray-300 dark:text-gray-800 flex" (click)="toggle()">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-            </svg>
-        </button>
-    </div>
-    <ng-container *ngIf="showForm">
-        <app-form-curriculum></app-form-curriculum>
-    </ng-container>
-</div>
+<app-form-curriculum></app-form-curriculum>
 
 <ng-container *ngIf="employee?.curriculum && employee?.curriculum?.length !== 0">
     <p class="font-bold">Curriculum:</p>
     <div class="flex">
         <!-- riempio la terza colonna -->
         <div class="flex-1">            
-            <div class="bg-gray-300 dark:text-gray-800 shadow-lg py-2 px-4 rounded-lg p-2 m-2" *ngFor="let curriculum of employee!.curriculum!.slice(2*(employee!.curriculum!.length)/3,employee!.curriculum!.length)">
+            <div class="bg-gray-200 dark:bg-gray-300 text-gray-800 shadow-lg py-2 px-4 rounded-lg p-2 m-2" *ngFor="let curriculum of employee!.curriculum!.slice(2*(employee!.curriculum!.length)/3,employee!.curriculum!.length)">
                 <div>
                     <h1 class="font-bold">ID: {{ curriculum.idCurriculum}}</h1><hr>
                 </div>
                 <ng-container *ngIf="!curriculum.modificaCurriculum; then areaCurriculum else formModificaAreaCurriculum"></ng-container>
                 <ng-template #areaCurriculum>
                     <div class="my-4 flex items-start justify-between">
-                        <div class="bg-white rounded-lg whitespace-pre-wrap ml-2 h-[100px] min-h-[100px] max-h-[600px] overflow-y-auto hide-scrollbar overflow-x-hidden">
+                        <div class=" whitespace-pre-wrap ml-2 h-[100px] min-h-[100px] max-h-[600px] overflow-y-auto hide-scrollbar overflow-x-hidden  text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-800 focus:outline-none dark:bg-gray-100 dark:border-gray-400 dark:placeholder-gray-400">
                             <p class="font-article">{{ curriculum.pdfText }}</p>
                         </div>                
                         <div>
@@ -96,14 +83,14 @@
         </div>
         <!-- riempio la seconda colonna -->
         <div class="flex-1">
-            <div class="bg-gray-300 dark:text-gray-800 shadow-lg py-2 px-4 rounded-lg p-2 m-2" *ngFor="let curriculum of employee!.curriculum!.slice((employee!.curriculum!.length)/3, 2*(employee!.curriculum!.length)/3)">
+            <div class="bg-gray-200 dark:bg-gray-300 text-gray-800 shadow-lg py-2 px-4 rounded-lg p-2 m-2" *ngFor="let curriculum of employee!.curriculum!.slice((employee!.curriculum!.length)/3, 2*(employee!.curriculum!.length)/3)">
                 <div>
                     <h1 class="font-bold">ID: {{ curriculum.idCurriculum}}</h1><hr>
                 </div>
                 <ng-container *ngIf="!curriculum.modificaCurriculum; then areaCurriculum else formModificaAreaCurriculum"></ng-container>
                 <ng-template #areaCurriculum>
                     <div class="my-4 flex items-start justify-between">
-                        <div class="bg-white rounded-lg whitespace-pre-wrap ml-2 h-[100px] min-h-[100px] max-h-[600px] overflow-y-auto hide-scrollbar overflow-x-hidden">
+                        <div class=" whitespace-pre-wrap ml-2 h-[100px] min-h-[100px] max-h-[600px] overflow-y-auto hide-scrollbar overflow-x-hidden  text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-800 focus:outline-none dark:bg-gray-100 dark:border-gray-400 dark:placeholder-gray-400">
                             <p class="font-article">{{ curriculum.pdfText }}</p>
                         </div>                
                         <div>
@@ -154,14 +141,14 @@
         </div>
         <!-- riempio la prima colonna (la seconda e la terza nonsono altro che lo stesso codice ma per una porione di dipendente.curriculum diverssa) -->
         <div class="flex-1">
-            <div class="bg-gray-300 dark:text-gray-800 shadow-lg py-2 px-4 rounded-lg p-2 m-2" *ngFor="let curriculum of employee!.curriculum!.slice(0, (employee!.curriculum!.length)/3)">
+            <div class="bg-gray-200 dark:bg-gray-300 text-gray-800 shadow-lg py-2 px-4 rounded-lg p-2 m-2" *ngFor="let curriculum of employee!.curriculum!.slice(0, (employee!.curriculum!.length)/3)">
                 <div>
                     <h1 class="font-bold">ID: {{ curriculum.idCurriculum}}</h1><hr>
                 </div>
                 <ng-container *ngIf="!curriculum.modificaCurriculum; then areaCurriculum else formModificaAreaCurriculum"></ng-container>
                 <ng-template #areaCurriculum>
                     <div class="my-4 flex items-start justify-between">
-                        <div class="bg-white rounded-lg whitespace-pre-wrap ml-2 h-[100px] min-h-[100px] max-h-[600px] overflow-y-auto hide-scrollbar overflow-x-hidden">
+                        <div class=" whitespace-pre-wrap ml-2 h-[100px] min-h-[100px] max-h-[600px] overflow-y-auto hide-scrollbar overflow-x-hidden  text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-800 focus:outline-none dark:bg-gray-100 dark:border-gray-400 dark:placeholder-gray-400">
                             <p class="font-article">{{ curriculum.pdfText }}</p>
                         </div>                
                         <div>
