@@ -75,8 +75,6 @@ export class FormCurriculumComponent implements OnInit{
                 this.employeeService.getEmployeeById(this.dataSharingService.data.idDipendente).then((x)=>{
                   this.dataSharingService.updateData(x);
                   this.employee=x
-                  this.isAtLeastOneCv=false;
-                  this.selectedFiles = [];
                   this.ShowForm()
                 }).catch(error=>{
                   console.log("ERROR getEmployeeById(...) call: "+error);
@@ -101,8 +99,6 @@ export class FormCurriculumComponent implements OnInit{
           break;
         }
         case(Opzioni.ErroreCVsNonAggiunti):{
-          this.isAtLeastOneCv=false;
-          this.selectedFiles = [];
           this.ShowForm()
           break;
         }
@@ -122,7 +118,9 @@ export class FormCurriculumComponent implements OnInit{
     }
   }
 
-  ShowForm(){
+  ShowForm(){    
+    this.isAtLeastOneCv=false;
+    this.selectedFiles = [];
     this.showForm=!this.showForm;
   }
 }
