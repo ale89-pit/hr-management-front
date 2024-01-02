@@ -21,19 +21,19 @@
 <app-form-curriculum></app-form-curriculum>
 
 <ng-container *ngIf="employee?.curriculum && employee?.curriculum?.length !== 0">
-    <p class="font-bold">Curriculum:</p>
+    <p class="font-bold pl-4">Curriculum:</p>
     <div class="flex">
         <!-- riempio la terza colonna -->
         <div class="flex-1">            
-            <div class="bg-gray-200 dark:bg-gray-300 text-gray-800 shadow-lg py-2 px-4 rounded-lg p-2 m-2" *ngFor="let curriculum of employee!.curriculum!.slice(2*(employee!.curriculum!.length)/3,employee!.curriculum!.length)">
+            <div class="bg-gray-400 text-gray-900 shadow-lg py-2 px-4 rounded-lg p-2 m-2" *ngFor="let curriculum of employee!.curriculum!.slice(2*(employee!.curriculum!.length)/3,employee!.curriculum!.length)">
                 <div>
                     <h1 class="font-bold">ID: {{ curriculum.idCurriculum}}</h1><hr>
                 </div>
                 <ng-container *ngIf="!curriculum.modificaCurriculum; then areaCurriculum else formModificaAreaCurriculum"></ng-container>
                 <ng-template #areaCurriculum>
                     <div class="my-4 flex items-start justify-between">
-                        <div class=" whitespace-pre-wrap ml-2 h-[100px] min-h-[100px] max-h-[600px] overflow-y-auto hide-scrollbar overflow-x-hidden  text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-800 focus:outline-none dark:bg-gray-100 dark:border-gray-400 dark:placeholder-gray-400">
-                            <p class="font-article">{{ curriculum.pdfText }}</p>
+                        <div class="w-full ml-2 h-[100px] min-h-[100px] max-h-[600px] overflow-y-auto hide-scrollbar overflow-x-hidden  text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-800 focus:outline-none dark:bg-gray-100 dark:border-gray-400 dark:placeholder-gray-400">
+                            <p class="break-words whitespace-pre-wrap font-article">{{ curriculum.pdfText }}</p>
                         </div>                
                         <div>
                             <button class="flex items-center justify-center p-2" (click)="ModificaArea(curriculum.idCurriculum)">
@@ -54,7 +54,7 @@
                         <div class="w-full ml-2">
                             <form [formGroup]="form" (submit)="editCurriculum(curriculum.idCurriculum)">
                                 <textarea class="bg-white rounded-lg whitespace-pre-wrap h-[100px] min-h-8 max-h-[600px] overflow-y-auto hide-scrollbar overflow-x-hidden w-full resize-none font-article"  defaultValue="{{ curriculum.pdfText }}" placeholder="{{ curriculum.pdfText }}" formControlName="cvPdfText" [ngModel]="curriculum.pdfText"></textarea>
-                                <div *ngIf="form.controls.cvPdfText.invalid" class="text-red-500">
+                                <div *ngIf="form.controls.cvPdfText.invalid" class="text-red-800">
                                     <p>Curriculum is required</p>
                                 </div>
                                 <div class="flex justify-center">
@@ -83,15 +83,15 @@
         </div>
         <!-- riempio la seconda colonna -->
         <div class="flex-1">
-            <div class="bg-gray-200 dark:bg-gray-300 text-gray-800 shadow-lg py-2 px-4 rounded-lg p-2 m-2" *ngFor="let curriculum of employee!.curriculum!.slice((employee!.curriculum!.length)/3, 2*(employee!.curriculum!.length)/3)">
+            <div class="bg-gray-400 text-gray-900 shadow-lg py-2 px-4 rounded-lg p-2 m-2" *ngFor="let curriculum of employee!.curriculum!.slice((employee!.curriculum!.length)/3, 2*(employee!.curriculum!.length)/3)">
                 <div>
                     <h1 class="font-bold">ID: {{ curriculum.idCurriculum}}</h1><hr>
                 </div>
                 <ng-container *ngIf="!curriculum.modificaCurriculum; then areaCurriculum else formModificaAreaCurriculum"></ng-container>
                 <ng-template #areaCurriculum>
                     <div class="my-4 flex items-start justify-between">
-                        <div class=" whitespace-pre-wrap ml-2 h-[100px] min-h-[100px] max-h-[600px] overflow-y-auto hide-scrollbar overflow-x-hidden  text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-800 focus:outline-none dark:bg-gray-100 dark:border-gray-400 dark:placeholder-gray-400">
-                            <p class="font-article">{{ curriculum.pdfText }}</p>
+                        <div class="w-full ml-2 h-[100px] min-h-[100px] max-h-[600px] overflow-y-auto hide-scrollbar overflow-x-hidden  text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-800 focus:outline-none dark:bg-gray-100 dark:border-gray-400 dark:placeholder-gray-400">
+                            <p class="break-words whitespace-pre-wrap font-article">{{ curriculum.pdfText }}</p>
                         </div>                
                         <div>
                             <button class="flex items-center justify-center p-2" (click)="ModificaArea(curriculum.idCurriculum)">
@@ -112,7 +112,7 @@
                         <div class="w-full ml-2">
                             <form [formGroup]="form" (submit)="editCurriculum(curriculum.idCurriculum)">
                                 <textarea class="bg-white rounded-lg whitespace-pre-wrap h-[100px] min-h-8 max-h-[600px] overflow-y-auto hide-scrollbar overflow-x-hidden w-full resize-none font-article"  defaultValue="{{ curriculum.pdfText }}" placeholder="{{ curriculum.pdfText }}" formControlName="cvPdfText" [ngModel]="curriculum.pdfText"></textarea>
-                                <div *ngIf="form.controls.cvPdfText.invalid" class="text-red-500">
+                                <div *ngIf="form.controls.cvPdfText.invalid" class="text-red-800">
                                     <p>Curriculum is required</p>
                                 </div>
                                 <div class="flex justify-center">
@@ -141,15 +141,15 @@
         </div>
         <!-- riempio la prima colonna (la seconda e la terza nonsono altro che lo stesso codice ma per una porione di dipendente.curriculum diverssa) -->
         <div class="flex-1">
-            <div class="bg-gray-200 dark:bg-gray-300 text-gray-800 shadow-lg py-2 px-4 rounded-lg p-2 m-2" *ngFor="let curriculum of employee!.curriculum!.slice(0, (employee!.curriculum!.length)/3)">
+            <div class="bg-gray-400 text-gray-900 shadow-lg py-2 px-4 rounded-lg p-2 m-2" *ngFor="let curriculum of employee!.curriculum!.slice(0, (employee!.curriculum!.length)/3)">
                 <div>
                     <h1 class="font-bold">ID: {{ curriculum.idCurriculum}}</h1><hr>
                 </div>
                 <ng-container *ngIf="!curriculum.modificaCurriculum; then areaCurriculum else formModificaAreaCurriculum"></ng-container>
                 <ng-template #areaCurriculum>
                     <div class="my-4 flex items-start justify-between">
-                        <div class=" whitespace-pre-wrap ml-2 h-[100px] min-h-[100px] max-h-[600px] overflow-y-auto hide-scrollbar overflow-x-hidden  text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-800 focus:outline-none dark:bg-gray-100 dark:border-gray-400 dark:placeholder-gray-400">
-                            <p class="font-article">{{ curriculum.pdfText }}</p>
+                        <div class="w-full ml-2 h-[100px] min-h-[100px] max-h-[600px] overflow-y-auto hide-scrollbar overflow-x-hidden  text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-800 focus:outline-none dark:bg-gray-100 dark:border-gray-400 dark:placeholder-gray-400">
+                            <p class="break-words whitespace-pre-wrap font-article">{{ curriculum.pdfText }}</p>
                         </div>                
                         <div>
                             <button class="flex items-center justify-center p-2" (click)="ModificaArea(curriculum.idCurriculum)">
@@ -170,7 +170,7 @@
                         <div class="w-full ml-2">
                             <form [formGroup]="form" (submit)="editCurriculum(curriculum.idCurriculum)">
                                 <textarea class="bg-white rounded-lg whitespace-pre-wrap h-[100px] min-h-8 max-h-[600px] overflow-y-auto hide-scrollbar overflow-x-hidden w-full resize-none font-article"  defaultValue="{{ curriculum.pdfText }}" placeholder="{{ curriculum.pdfText }}" formControlName="cvPdfText" [ngModel]="curriculum.pdfText"></textarea>
-                                <div *ngIf="form.controls.cvPdfText.invalid" class="text-red-500">
+                                <div *ngIf="form.controls.cvPdfText.invalid" class="text-red-800">
                                     <p>Curriculum is required</p>
                                 </div>
                                 <div class="flex justify-center">
@@ -200,10 +200,10 @@
     </div>
 </ng-container>
 <ng-container *ngIf="employee?.curriculum?.length===0">
-    <div class=" bg-red-300 dark:text-red-800 shadow-lg py-2 px-4 rounded-lg p-2 m-2  flex items-center">
+    <div class=" bg-red-400 text-red-800 shadow-lg py-2 px-4 rounded-lg p-2 m-2  flex items-center">
         <p>Non ci sono curriculum, aggiungine uno!</p>
     </div>
 </ng-container>
-<div class="fixed top-[25%] right-[25%]" [ngClass]="{ 'hidden': !showModal }">
+<div class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" [ngClass]="{ 'hidden': !showModal }">
     <app-modal (close)="closeModal($event)" [finestra]="alert"></app-modal>
 </div>

@@ -9,21 +9,17 @@ export class CurriculumServiceService {
   constructor() { }
 
   async addCVsFromIDDipendente(id_dipendente:number, curriculumFile: FileUpload[]): Promise<any> {
-    const key:string="key";
+    const key:string='key';
     let url=this.url+`/esercizio_3/addCVsFromIDDipendente/${id_dipendente}`;
       const formData = new FormData();
       for (let file of curriculumFile) {
-        formData.append(key, file.file,file.file.name);console.log(file.file)
+        formData.append(key, file.file,file.file.name);
       }   
       return await fetch(url, {
-        method: 'POST',
-  headers: {
-    'Content-Type': 'multipart/form-data; boundary=------------------------' + Math.random().toString(36).substring(7)
-        },
+        method: 'POST',//strano! non devo specificare gli headers!?!?
         body: formData
-      }) 
-      
-  }
+      })
+ }
 
   async deleteCVsFromID(id:number|undefined): Promise<any> {
     let url=this.url+`/deleteCVsFromID/${id}`;

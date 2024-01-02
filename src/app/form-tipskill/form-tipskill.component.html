@@ -13,18 +13,18 @@
                 <div>
                     <div>
                         <input type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded-sm" formControlName="selectAll" (change)="toggleSelectAll()">
-                        <label class="ml-2 text-gray-700">Seleziona / deseleziona tutto</label>
+                        <label class="ml-2 text-gray-800">Seleziona / deseleziona tutto</label>
                     </div>
                 </div>
                 <div formArrayName="checkboxes">
                     <div *ngFor="let skill of allTipskills; let i = index">
                         <span class="flex items-left pl-3">
                             <input type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded-sm" [formControlName]="i" (change)="updateCheckboxSelection()" [disabled]="skill.isCheckedByDefault ?? false">
-                            <label class="ml-2 text-gray-700">{{skill.tipologiaSkill}}</label>
+                            <label class="ml-2 text-gray-800">{{skill.tipologiaSkill}}</label>
                         </span>
                     </div>
                 </div>
-                <div *ngIf="!isAtLeastOneCheckboxSelected"  class="text-red-500">
+                <div *ngIf="!isAtLeastOneCheckboxSelected" class="text-red-800">
                     <p>At least one skill is required</p>
                 </div>
                 <div class="flex justify-center">
@@ -55,7 +55,7 @@
             <button type="submit">Invia</button>
             </form>-->
     </div>
-    <div class="fixed top-[25%] right-[25%]" [ngClass]="{ 'hidden': !showModal }">
-        <app-modal (close)="closeModal($event)" [finestra]="alert"></app-modal>
-    </div>
+</div>
+<div class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" [ngClass]="{ 'hidden': !showModal }">
+    <app-modal (close)="closeModal($event)" [finestra]="alert"></app-modal>
 </div>

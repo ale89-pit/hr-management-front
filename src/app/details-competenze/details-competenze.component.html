@@ -1,8 +1,8 @@
 <div>
     <ng-container *ngIf="employee?.skills?.length">
-        <p class="font-bold">Competenze:</p>
+        <p class="font-bold pl-4">Competenze:</p>
         <div class="flex flex-wrap">
-            <div class=" bg-gray-200 dark:bg-gray-300 text-gray-800 shadow-lg py-2 px-4 rounded-lg p-2 m-2  flex items-center" *ngFor="let skill of employee?.skills">
+            <div class=" bg-gray-400 text-gray-900 shadow-lg py-2 px-4 rounded-lg p-2 m-2  flex items-center" *ngFor="let skill of employee?.skills">
                 <span class="mr-2 font-bold">ID: {{ skill.idTipskill }}</span>
                 <span class="mr-2"> | {{ skill.tipologiaSkill }} | </span>
                 <span class="mr-2">
@@ -18,11 +18,11 @@
         </div>
     </ng-container>
     <ng-container *ngIf="employee?.skills?.length===0">
-        <div class=" bg-red-300 dark:text-red-800 shadow-lg py-2 px-4 rounded-lg p-2 m-2  flex items-center">
+        <div class=" bg-red-400 text-red-800 shadow-lg py-2 px-4 rounded-lg p-2 m-2  flex items-center">
             <p>Non ci sono competenze asserite nei curriculum, aggiungine una!</p>
         </div>
     </ng-container>
-    <div class="fixed top-[25%] right-[25%]" [ngClass]="{ 'hidden': !showModal }">
-        <app-modal (close)="closeModal($event)" [finestra]="alert"></app-modal>
-    </div>
+</div>
+<div class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" [ngClass]="{ 'hidden': !showModal }">
+    <app-modal (close)="closeModal($event)" [finestra]="alert"></app-modal>
 </div>

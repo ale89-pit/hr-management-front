@@ -6,7 +6,9 @@ export interface ModalContent{
 export enum Opzioni {
     Aggiungi=0,
     Modifica,
-    Cancella
+    Cancella,
+    ErroreIdDipendenteNonTrovato,
+    ErroreCVsNonAggiunti
 }
 export interface ModalInterface {
     conferma: boolean|undefined;

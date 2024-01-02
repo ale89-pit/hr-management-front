@@ -95,6 +95,12 @@ export class DetailsEmployeeComponent implements OnInit{
       this.dataSharingService.updateData(x);
       this.employee=x
     }).catch(error=>{
+      this.alert={
+        messaggio:"Torna alla pagina iniziale",
+        avviso: "Attenzione non è stato trovato nessun dipendente corrispondente all'ID: "+this.id,
+        tipo: Opzioni.ErroreIdDipendenteNonTrovato
+      }
+      this.showModal = true;
       console.log("ERROR getEmployeeById(...) call: "+error);
     });   
 
@@ -183,6 +189,10 @@ export class DetailsEmployeeComponent implements OnInit{
               console.log("ERROR patchEmployeeById(...) call: "+error);
           });
           this.modificaAreaPersonale=!this.modificaAreaPersonale //in altri esempio , come la cancellazione del curriculm , questa riga non serve. Sono rimasto un po' perplesso a causa di questa select. Ho preferito tagliare la testa al toro, troppo tempo buttato
+          break;
+        }
+        case(Opzioni.ErroreIdDipendenteNonTrovato):{
+          this.router.navigate(['']);
           break;
         }
         
