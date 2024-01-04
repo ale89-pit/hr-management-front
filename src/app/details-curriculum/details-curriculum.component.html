@@ -44,7 +44,7 @@ da cui ottieni
     <p class="font-bold pl-4">Curriculum:</p>
     <div class="flex flex-wrap">
         <!-- riempio la seconda colonna -->
-        <div class="flex-1 sm:w-full md:w-1/2 lg:w-1/3 xl:w-1/4">          
+        <div class="flex-1">          
             <div class="bg-gray-400 text-gray-900 shadow-lg py-2 px-4 rounded-lg p-2 m-2" *ngFor="let curriculum of employee!.curriculum!.slice(1*(employee!.curriculum!.length)/2, 2*(employee!.curriculum!.length)/2)">
                 <div>
                     <h1 class="font-bold">ID: {{ curriculum.idCurriculum}}</h1><hr>
@@ -119,7 +119,7 @@ da cui ottieni
             </div>
         </div>
         <!-- riempio la prima colonna -->
-        <div class="flex-1 sm:w-full md:w-1/2 lg:w-1/3 xl:w-1/4">
+        <div class="flex-1">
             <div class="bg-gray-400 text-gray-900 shadow-lg py-2 px-4 rounded-lg p-2 m-2" *ngFor="let curriculum of employee!.curriculum!.slice(0*(employee!.curriculum!.length)/2, 1*(employee!.curriculum!.length)/2)">
                 <div>
                     <h1 class="font-bold">ID: {{ curriculum.idCurriculum}}</h1><hr>
