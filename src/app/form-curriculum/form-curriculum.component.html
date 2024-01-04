@@ -9,7 +9,7 @@
             <h1  class="flex items-center">aggiungi curriculum</h1>  
         </div>
         <div *ngIf="showForm">
-            <input accept=".txt" (change)="onFileChange($event)" class="block w-full text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-100 dark:border-gray-400 dark:placeholder-gray-400" type="file" multiple>
+            <input accept=".txt,.pdf" (change)="onFileChange($event)" class="w-[250px] block w-full text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-100 dark:border-gray-400 dark:placeholder-gray-400" type="file" multiple>
                 <div class="flex flex-wrap">
                     <ng-container *ngFor="let file of selectedFiles">
                         <div class="bg-gray-300 shadow-lg rounded-lg m-2 p-1 flex flex-wrap w-fit">{{ file.file.name }}
@@ -23,7 +23,7 @@
                 </div>
         
         <div *ngIf="!isAtLeastOneCv" class="text-red-800">
-            <p>At least one curriculum (only .txt format) is required</p>
+            <p>At least one curriculum (.txt, .pdf) is required</p>
         </div>
         <div class="flex justify-center">
             <button (click)="uploadFiles()" type="submit" class="px-4 py-2 rounded bg-green-500 text-white hover:bg-blue-600 focus:outline-none transition-colors">Invia</button>

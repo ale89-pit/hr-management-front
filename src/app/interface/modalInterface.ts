@@ -8,7 +8,8 @@ export enum Opzioni {
     Modifica,
     Cancella,
     ErroreIdDipendenteNonTrovato,
-    ErroreCVsNonAggiunti
+    ErroreCVsDuplicati,
+    ErroreFileVuoti
 }
 export interface ModalInterface {
     conferma: boolean|undefined;
