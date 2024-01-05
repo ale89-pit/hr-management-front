@@ -4,12 +4,13 @@ import { FileUpload } from '../interface/fileUpload';
   providedIn: 'root'
 })
 export class CurriculumServiceService {
+  public key:string="files";
   public url: string="http://localhost:8080/curriculum";
 
   constructor() { }
 
   async addCVsFromIDDipendente(id_dipendente:number, curriculumFile: FileUpload[]): Promise<any> {
-    const key:string='key';
+    const key:string="key";
     let url=this.url+`/esercizio_3/addCVsFromIDDipendente/${id_dipendente}`;
       const formData = new FormData();
       for (let file of curriculumFile) {

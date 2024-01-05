@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ModalContent, ModalInterface } from '../interface/modalInterface';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-modal',
@@ -10,6 +11,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './modal.component.css'
 })
 export class ModalComponent {
+  
   @Input() finestra:ModalContent={
     messaggio: undefined,
     avviso: undefined,
@@ -20,6 +22,15 @@ export class ModalComponent {
     tipo: undefined
   }
   @Output() close: EventEmitter<ModalInterface> = new EventEmitter<ModalInterface>();
+
+  showButton: boolean = true;
+  constructor(private currentRoute: Router) {
+  if(this.currentRoute.url=='/'){
+    this.showButton = false;
+  }
+   console.log(this.currentRoute.url)
+  }
+
 
   okCloseModal() {
     this.ritorno = {
@@ -33,6 +44,7 @@ export class ModalComponent {
       conferma: false,
       tipo: this.finestra.tipo
     }
+    
     this.close.emit(this.ritorno)
   }
 

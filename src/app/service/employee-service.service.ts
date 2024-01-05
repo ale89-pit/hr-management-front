@@ -2,6 +2,7 @@ import { Inject, Injectable } from "@angular/core";
 import { EmployeeInterface } from "../interface/employeeInterface";
 import { EmployeeDTOInterface } from "../interface/employeeDTOInterface";
 import { Page } from "../interface/pageInterface";
+import { BehaviorSubject } from "rxjs";
 
 
 
@@ -9,6 +10,15 @@ import { Page } from "../interface/pageInterface";
   providedIn: 'root'
 })
 export class EmployeeServiceService {
+  private employeesListSubject = new BehaviorSubject<EmployeeInterface[]>([]);
+  employeesList$ = this.employeesListSubject.asObservable();
+  private currentPageSubject = new BehaviorSubject<number>(1);
+  private totalPagesSubject = new BehaviorSubject<number>(0);
+  currentPage$ = this.currentPageSubject.asObservable();
+  totalPages$ = this.totalPagesSubject.asObservable();
+  private filterActiveSubject = new BehaviorSubject<boolean>(false);
+  filterActive$ = this.filterActiveSubject.asObservable();
+
   public url:string="http://localhost:8080/dipendente";
 
 
@@ -18,7 +28,11 @@ export class EmployeeServiceService {
   async getAllEmployees(page:number):  Promise<Page<EmployeeInterface>> {
     let url=this.url+`/diplistpage?page=${page}`;
     const data = await fetch(url);
-    return await data.json() ?? { content: [], totalPages: 0, totalElements: 0, size: 0, number: 0 };
+    const employees = await data.json() ?? { content: [], totalPages: 0, totalElements: 0, size: 0, number: 0 };
+    this.employeesListSubject.next(employees.content);
+    this.totalPagesSubject.next(employees.totalPages);
+    this.currentPageSubject.next(employees.number + 1);
+    return employees
   }
 
   async addEmployee(employee: EmployeeDTOInterface): Promise<EmployeeDTOInterface> {
@@ -34,6 +48,7 @@ export class EmployeeServiceService {
       throw new Error('Failed to delete employee');      
     }    
     const data = await response.json()??[];
+    this.getAllEmployees((await this.getAllEmployees(0)).totalPages-1);
     return data   
   }
 
@@ -70,5 +85,24 @@ export class EmployeeServiceService {
         'Content-Type': 'application/json'
       },
     });
+  }
+  
+  async filterEmployeebetweenDateandSkill(startDate: string, endDate: string, skill: string []): Promise<Page<EmployeeInterface>> {
+    let url = this.url+`/dipendentiPerDataDiNascitaECompetenze?dataInizio=1977-01-01&dataFine=2021-01-01&skill=Java?startDate=${startDate}&endDate=${endDate}&skill=${skill}`;
+    const data = await fetch(url);
+    const employees = await data.json() ?? { content: [], totalPages: 0, totalElements: 0, size: 0, number: 0 };
+    this.employeesListSubject.next(employees.content);
+    return employees;
+  }
+
+  async filterBynameSurname(nameSurname : string, page: number): Promise<Page<EmployeeInterface>> {
+    let url = this.url+`/filterListName?nomeCognome=${nameSurname}&page=${page}`;
+    const data = await fetch(url);
+    const employees = await data.json() ?? { content: [], totalPages: 0, totalElements: 0, size: 0, number: 0 };
+    this.employeesListSubject.next(employees.content);
+    this.currentPageSubject.next(employees.number + 1);
+    this.totalPagesSubject.next(employees.totalPages);
+    
+    return employees;
   }
 }

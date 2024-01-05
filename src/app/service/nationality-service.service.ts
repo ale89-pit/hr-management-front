@@ -14,4 +14,14 @@ export class NationalityServiceService {
     return await data.json() ?? []; 
     
   }
+
+  async addNationality(nazionalita: String): Promise<any> {
+    let url = this.url+`/aggiungi/${nazionalita}`;
+    const response =  await fetch(url,{
+      method: 'POST',
+    
+      
+    });
+    return  response?? [];
+  }
 }
