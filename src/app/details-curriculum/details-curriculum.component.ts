@@ -33,7 +33,7 @@ export class DetailsCurriculumComponent implements OnInit{
   
   constructor(private formBuilder: FormBuilder,
     private dataSharingService: DataSharingService,
-    private curriculumService: CurriculumServiceService,
+    public curriculumService: CurriculumServiceService,
     private employeeService: EmployeeServiceService
     ) {}
     
@@ -131,5 +131,9 @@ export class DetailsCurriculumComponent implements OnInit{
 
   toggle(){
     this.showForm=!this.showForm;
+  }
+
+  DownloadFile(content: string,id:number): void {
+    this.curriculumService.writeStringToFile(content,id);
   }
 }

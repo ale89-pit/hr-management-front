@@ -85,8 +85,18 @@ export class FormCurriculumComponent implements OnInit{
                 //uesta paarte dell'alert la fa in maniera asincrona e soprattutto dopo la chiusura dll'allert di prima
                 this.alert={
                   messaggio:undefined,
-                  avviso:"Errore durante l'aggiunta del curriculum. Possibili duplicati",
-                  tipo: Opzioni.ErroreCVsNonAggiunti
+                  avviso:"Errore durante l'aggiunta del curriculum. Possibili duplicati!",
+                  tipo: Opzioni.ErroreCVsDuplicati
+                }
+                //console.log(alert)
+                this.showModal = true;
+                break;
+              }
+              case(404): {
+                this.alert={
+                  messaggio:undefined,
+                  avviso:"Errore durante l'aggiunta del curriculum. Documenti vuoti!",
+                  tipo: Opzioni.ErroreFileVuoti
                 }
                 //console.log(alert)
                 this.showModal = true;
@@ -98,7 +108,11 @@ export class FormCurriculumComponent implements OnInit{
             });
           break;
         }
-        case(Opzioni.ErroreCVsNonAggiunti):{
+        case(Opzioni.ErroreCVsDuplicati):{
+          this.ShowForm()
+          break;
+        }
+        case(Opzioni.ErroreFileVuoti):{
           this.ShowForm()
           break;
         }
