@@ -21,7 +21,8 @@ export class DetailsCurriculumComponent implements OnInit{
   alert:ModalContent={
     messaggio:"empty message",
     avviso: "Error: initialize message",
-    tipo: undefined
+    tipo: undefined,
+    showAnnulla: undefined
   }
   curriculumID!:number;
   showModal!:boolean;
@@ -53,19 +54,32 @@ export class DetailsCurriculumComponent implements OnInit{
     this.alert={
       messaggio:"Vuoi continuare?",
       avviso: "Attenzione la cancellazione del curriculum comporta la cancellazione di alcune competenze ad esso collegate",
-      tipo: Opzioni.Cancella
+      tipo: Opzioni.Cancella,
+      showAnnulla: true
     }
     this.showModal = true;
     this.curriculumID=idCurriculum;
   }
 
   editCurriculum(idCurriculum:number){
+    if (this.employee.curriculum) {
+      this.employee.curriculum.forEach(x => {
+        if (x.idCurriculum == idCurriculum) {
+          x.submitted= true
+        }
+        else
+        {
+          x.submitted = false
+        }
+      })
+    }
     if(!this.form.controls.cvPdfText.invalid)
     {
       this.alert={
         messaggio:"Vuoi modificare il contenuto del curriculum?",
         avviso: undefined,
-        tipo: Opzioni.Modifica
+        tipo: Opzioni.Modifica,
+        showAnnulla: true
       }
       this.showModal = true;
       this.curriculumID=idCurriculum;
@@ -75,10 +89,15 @@ export class DetailsCurriculumComponent implements OnInit{
 
   ModificaArea(id:number):void  {
     if (this.employee.curriculum) {
-      const curriculum = this.employee.curriculum.find(x => x.idCurriculum == id);
-      if (curriculum) {
-        curriculum.modificaCurriculum = !curriculum.modificaCurriculum
-      }
+      this.employee.curriculum.forEach(x => {
+        if (x.idCurriculum == id) {
+          x.modificaCurriculum = !x.modificaCurriculum
+        }
+        else
+        {
+          x.modificaCurriculum = false
+        }
+      })
     }
   }
 

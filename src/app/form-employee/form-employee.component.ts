@@ -32,7 +32,8 @@ export class FormEmployeeComponent implements OnInit {
   alert:ModalContent = {
     messaggio:"empty message",
     avviso: "Error: initialize message",
-    tipo: undefined
+    tipo: undefined,
+    showAnnulla:undefined
   };
   newNationality = "";
 
@@ -136,7 +137,8 @@ openNatForm(){
         this.alert = {
           messaggio: 'Dati inseriti correttamente',
           avviso: 'Premi Ok per continuare',
-          tipo: undefined
+          tipo: undefined,
+          showAnnulla: false
         }
         
         
@@ -151,7 +153,8 @@ openNatForm(){
       this.alert = {
         messaggio: 'Dati inseriti correttamente',
         avviso: 'Premi Ok per continuare',
-        tipo: undefined
+        tipo: undefined,
+        showAnnulla: false
       }
       this.showModal = true
       this.getNatList()
@@ -160,7 +163,8 @@ openNatForm(){
       this.alert = {
         messaggio: 'Nazionalità esistente',
         avviso: 'Premi Ok per continuare',
-        tipo: undefined
+        tipo: undefined,
+        showAnnulla: false
       }
       this.showModal = true
     }

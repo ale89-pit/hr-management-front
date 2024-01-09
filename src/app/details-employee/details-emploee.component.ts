@@ -13,6 +13,7 @@ import { DataSharingService } from '../service/data-sharing-service.service';
 import { DetailsCompetenzeComponent } from '../details-competenze/details-competenze.component';
 import { ModalContent, ModalInterface, Opzioni } from '../interface/modalInterface';
 
+
 @Component({
     selector: 'app-details',
     standalone: true,
@@ -24,7 +25,8 @@ export class DetailsEmployeeComponent implements OnInit{
   alert:ModalContent={
     messaggio:"empty message",
     avviso: "Error: initialize message",
-    tipo: undefined
+    tipo: undefined,
+    showAnnulla: undefined
   }
   public modificaAreaPersonale!: boolean;
   public route:ActivatedRoute=inject(ActivatedRoute);
@@ -53,6 +55,7 @@ export class DetailsEmployeeComponent implements OnInit{
     refNazionalita: new FormControl(''),
   });
   public showModal!: boolean;
+  submitted!:boolean;
 
 
 
@@ -79,6 +82,7 @@ export class DetailsEmployeeComponent implements OnInit{
   }
 
   ngOnInit(){
+    this.submitted=false;
     this.id=Number(this.route.snapshot.params['id']);
     this.showModal = false;
     this.modificaAreaPersonale=false;
@@ -95,46 +99,54 @@ export class DetailsEmployeeComponent implements OnInit{
       this.dataSharingService.updateData(x);
       this.employee=x
     }).catch(error=>{
-      this.alert={
+      /*this.alert={
         messaggio:"Torna alla pagina iniziale",
         avviso: "Attenzione non è stato trovato nessun dipendente corrispondente all'ID: "+this.id,
-        tipo: Opzioni.ErroreIdDipendenteNonTrovato
+        tipo: Opzioni.ErroreIdDipendenteNonTrovato,
+        showAnnulla: false
       }
-      this.showModal = true;
+      this.showModal = true;*/
+      this.router.navigate(['**/'+error]);
       console.log("ERROR getEmployeeById(...) call: "+error);
-    });   
-
+    });  
     this.form =this.formBuilder.group({
-      nome: ['',[Validators.required,Validators.minLength(3)]],
-      cognome: ['',[Validators.required,Validators.minLength(3)]],
-      dataDiNascita: ['',[Validators.required,this.dateValidation(18)]],
-      matricola: [''],
-      citta: ['',Validators.required],
-      indirizzo: ['',Validators.required],
-      refNazionalita: [String(this.employee.refNazionalita?.idRefNazionalita),Validators.required],
-    })
+        nome: ['',[Validators.required,Validators.minLength(3)]],
+        cognome: ['',[Validators.required,Validators.minLength(3)]],
+        dataDiNascita: ['',[Validators.required,this.dateValidation(18)]],
+        matricola: [''],
+        citta: ['',Validators.required],
+        indirizzo: ['',Validators.required],
+        refNazionalita: [String(this.employee.refNazionalita?.idRefNazionalita),Validators.required],
+      });
+
+
   }
   
   ModificaDipendente()  {
+    this.submitted = true
     if(!this.form.invalid){
       this.alert={
         messaggio:"Vuoi continuare?",
         avviso: "Attenzione stai per modificare i dati personali del dipendente",
-        tipo: Opzioni.Modifica
+        tipo: Opzioni.Modifica,
+        showAnnulla: true
       }
       this.showModal = true;
     }
   }
 
   ModificaArea():void  {
-    this.modificaAreaPersonale=!this.modificaAreaPersonale;    
+    this.modificaAreaPersonale=!this.modificaAreaPersonale;
+    this.submitted = false
+  
   }
 
   CancellaDipendete() {
     this.alert={
       messaggio:"Vuoi continuare?",
       avviso: "Attenzione la cancellazione del dipendente comporta la cancellazione di tutti i cv e le competenze collegate",
-      tipo: Opzioni.Cancella
+      tipo: Opzioni.Cancella,
+      showAnnulla: true
     }
     this.showModal = true;
   }
@@ -144,6 +156,7 @@ export class DetailsEmployeeComponent implements OnInit{
       switch(conferma.tipo){
         case(Opzioni.Cancella):{
           this.employeeService.deleteEmployeeById(this.employee.idDipendente).then(response=>{
+            //console.log(response.status)
             //if(resposne.ok) è equivalente a
             if(response.status==200)
             {
@@ -192,14 +205,14 @@ export class DetailsEmployeeComponent implements OnInit{
           break;
         }
         case(Opzioni.ErroreIdDipendenteNonTrovato):{
-          this.router.navigate(['']);
+          this.router.navigate(['**']);
           break;
         }
         
       }
         
     }
-    this.showModal = false
+    this.showModal = false    
   }
 
   /* esempio di sviluppo

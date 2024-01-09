@@ -18,7 +18,8 @@ export class DetailsCompetenzeComponent implements OnInit{
   alert:ModalContent={
     messaggio:"empty message",
     avviso: "Error: initialize message",
-    tipo: undefined
+    tipo: undefined,
+    showAnnulla:undefined
   }
   showModal!:boolean;
   employee!:EmployeeInterface;
@@ -40,8 +41,9 @@ export class DetailsCompetenzeComponent implements OnInit{
     this.alert={
       messaggio:"Vuoi continuare?",
       avviso: "Attenzione la cancellazione di una competenza comporta la sua cancellazione in ogni curriculum",
-      tipo: Opzioni.Cancella
-    }
+      tipo: Opzioni.Cancella,
+      showAnnulla: true
+    };
     this.showModal = true;
     this.competenzaID=idCompetenza;
   }

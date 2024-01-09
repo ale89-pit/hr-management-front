@@ -4,20 +4,20 @@
     <div class="flex justify-center">
         <div class="bg-gray-400 text-gray-900 shadow-lg py-2 px-4 rounded-lg p-2 m-2" >
             <div>
-                <h1 class="font-bold">ID:  {{id}}</h1><hr> 
+                <h1 class="font-bold">ID:  {{id}}</h1><hr>
             </div>
             <div class="flex">   
                 <ng-container *ngIf="!modificaAreaPersonale; then areaPersonale else formModificaAreaPersonale"></ng-container>
                 <ng-template #areaPersonale>
                     <div class="flex-wrap">
-                        <ul>
-                            <li>matricola: {{ employee?.matricola }}</li>
-                            <li>nome: {{ employee?.nome }}</li>
-                            <li>cognome: {{ employee?.cognome }}</li>
-                            <li>data di nascita: {{ employee?.dataDiNascita }}</li>
-                            <li>indirizzo: {{ employee?.indirizzo }}</li>
-                            <li>citta: {{ employee?.citta }}</li>
-                            <li>nazionalità: {{ employee?.refNazionalita?.nazionalita}}</li>
+                        <ul class="p-2">
+                            <li class="p-2">Matricola: {{ employee?.matricola }}</li>
+                            <li class="p-2">Nome: {{ employee?.nome  | titlecase}}</li>
+                            <li class="p-2">Cognome: {{ employee?.cognome | titlecase}}</li>
+                            <li class="p-2">Data di nascita: {{ employee?.dataDiNascita }}</li>
+                            <li class="p-2">Indirizzo: {{ employee?.indirizzo  | titlecase}}</li>
+                            <li class="p-2">Citta: {{ employee?.citta | titlecase}}</li>
+                            <li class="p-2">Nazionalità: {{ employee?.refNazionalita?.nazionalita | titlecase}}</li>
                         </ul>
                     </div>
                 </ng-template>
@@ -26,42 +26,45 @@
                         <form [formGroup]="form" (submit)="ModificaDipendente()">
                             <fieldset>
                                 <div class="p-2">
-                                    matricola: {{ employee?.matricola }}
+                                    Matricola: {{ employee?.matricola }}
                                 </div>
                                 <div class="p-2">
-                                    nome:  <input type="text" placeholder="{{ employee?.nome }}" formControlName="nome" [ngModel]="employee?.nome" class="rounded-lg">
-                                        <div *ngIf="form.controls.nome.invalid" class="text-red-800">
+                                    Nome:  <input type="text" [placeholder]="employee?.nome" formControlName="nome" [ngModel]="employee?.nome" class="border p-2 rounded w-full"><!-- [ngClass]="{ 'border-red-500': form.get('nome')?.invalid && form.controls['nome'].touched}">-->
+                                        <div *ngIf="submitted && form.controls.nome.invalid" class="text-red-800">
                                             <p>First name is required</p>
                                         </div>
                                     </div>
                                     <div class="p-2">
-                                    cognome:  <input type="text" placeholder="{{ employee?.cognome }}" formControlName="cognome" [ngModel]="employee?.cognome" class="rounded-lg">
-                                        <div *ngIf="form.controls.cognome.invalid" class="text-red-800">
+                                    Cognome:  <input type="text" [placeholder]="employee?.cognome" formControlName="cognome" [ngModel]="employee?.cognome" class="border p-2 rounded w-full"><!--  [ngClass]="{ 'border-red-500': form.get('cognome')?.invalid && form.controls['cognome'].touched }">-->
+                                        <div *ngIf="submitted && form.controls.cognome.invalid" class="text-red-800">
                                             <p>Last name is required</p>
                                         </div>
                                     </div>
                                     <div class="p-2">
-                                    <label>data di nascita:  </label><input type="date" defaultValue="{{ employee?.dataDiNascita }}" formControlName="dataDiNascita" [ngModel]="employee?.dataDiNascita" class="rounded-lg">
-                                        <div *ngIf="(form.controls.dataDiNascita.invalid || form.controls.dataDiNascita.hasError('minAge'))" class="text-red-800">
-                                            <p>Date of birth is required/invalid</p>
+                                    <label>Data di nascita:  </label><input type="date" [defaultValue]="employee?.dataDiNascita" formControlName="dataDiNascita" class="border p-2 rounded w-full" [ngModel]="employee?.dataDiNascita"><!--  [ngClass]="{ 'border-red-500': form.get('dataDiNascita')?.invalid && form.controls['dataDiNascita'].touched }">-->
+                                        <div *ngIf="submitted && form.controls.dataDiNascita.hasError('required')" class="text-red-800">
+                                            <p>Date of birth is required</p>
+                                        </div>
+                                        <div *ngIf="submitted && form.controls.dataDiNascita.hasError('minAge')" class="text-red-800">
+                                            <p>Date of birth invalid</p>
                                         </div>
                                     </div>
                                     <div class="p-2">
-                                    indirizzo:  <input type="text" placeholder="{{ employee?.indirizzo }}" formControlName="indirizzo" [ngModel]="employee?.indirizzo" class="rounded-lg">
-                                        <div *ngIf="form.controls.indirizzo.invalid" class="text-red-800">
+                                    Indirizzo:  <input type="text" [placeholder]="employee?.indirizzo" formControlName="indirizzo" [ngModel]="employee?.indirizzo" class="border p-2 rounded w-full"><!--  [ngClass]="{ 'border-red-500': form.get('indirizzo')?.invalid && form.controls['indirizzo'].touched }">-->
+                                        <div *ngIf="submitted && form.controls.indirizzo.invalid" class="text-red-800">
                                             <p>Address is required</p>
                                         </div>
                                     </div>
                                     <div class="p-2">
-                                    citta:  <input type="text" placeholder="{{ employee?.citta }}" formControlName="citta" [ngModel]="employee?.citta" class="rounded-lg">
-                                        <div *ngIf="form.controls.citta.invalid" class="text-red-800">
+                                    Città:  <input type="text" [placeholder]="employee?.citta" formControlName="citta" [ngModel]="employee?.citta" class="border p-2 rounded w-full" class="border p-2 rounded w-full"><!--  [ngClass]="{ 'border-red-500': form.get('citta')?.invalid && form.controls['citta'].touched }">-->
+                                        <div *ngIf="submitted && form.controls.citta.invalid" class="text-red-800">
                                             <p>City is required</p>
                                         </div>
                                     </div>
                                     <div class="p-2">
-                                        nazionalità:
-                                        <select formControlName="refNazionalita" class="rounded-lg" [ngModel]="employee?.refNazionalita?.idRefNazionalita">
-                                            <option *ngFor="let n of nazionalitaList" [value]="n.idRefNazionalita" [disabled]="n.idRefNazionalita===employee?.refNazionalita?.idRefNazionalita" class=" disabled:bg-gray-200">{{n.nazionalita}}</option>
+                                        Nazionalità:
+                                        <select formControlName="refNazionalita" class="border p-2 rounded w-full" [ngModel]="employee?.refNazionalita?.idRefNazionalita">
+                                            <option *ngFor="let n of nazionalitaList" [value]="n.idRefNazionalita" [disabled]="n.idRefNazionalita===employee?.refNazionalita?.idRefNazionalita" class="disabled:bg-gray-200">{{n.nazionalita | titlecase}}</option>
                                         </select>
                                         <div class="flex justify-center pt-2">
                                             <button type="submit" class="px-4 py-2 rounded bg-green-500 text-white hover:bg-blue-600 focus:outline-none transition-colors">Invia</button>
@@ -72,13 +75,13 @@
                     </div>
                 </ng-template>
                 <div>
-                    <button class="flex items-center justify-center p-2" (click)="ModificaArea()">
+                    <button class="flex items-center justify-center p-2 ml-4 my-3 border-blue-500 custom-button-spacing rounded-lg text-white bg-blue-500" (click)="ModificaArea()">
                     <!-- icone su heroicons.com -->
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" data-slot="icon" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                         </svg>
                     </button>
-                    <button class="flex items-center justify-center p-2"  (click)="CancellaDipendete()">
+                    <button class="flex items-center justify-center p-2 ml-4 my-3 border-blue-500 custom-button-spacing rounded-lg text-white bg-blue-500"  (click)="CancellaDipendete()">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" data-slot="icon" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
                         </svg>
@@ -96,9 +99,10 @@
         </div></div>
         
 </div>
+<!--
 <div *ngIf="employee.idDipendente===-1">
     <p class="p-10">Redirect to the main page...</p>
-</div>
+</div>-->
 <div class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" [ngClass]="{ 'hidden': !showModal }">
     <app-modal (close)="closeModal($event)" [finestra]="alert"></app-modal>
 </div>
