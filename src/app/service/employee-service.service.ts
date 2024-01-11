@@ -36,21 +36,37 @@ export class EmployeeServiceService {
   }
 
   async addEmployee(employee: EmployeeDTOInterface): Promise<EmployeeDTOInterface> {
-    let url=this.url+`/aggiungiDipendente`;
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(employee)
-    });
-    if(!response.ok){
-      throw new Error('Failed to delete employee');      
-    }    
-    const data = await response.json()??[];
-    this.getAllEmployees((await this.getAllEmployees(0)).totalPages-1);
-    return data   
+    try {
+      let url = this.url + `/aggiungiDipendente`;
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(employee)
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to add employee');
+      }
+  
+      const data = await response.json() ?? {};
+  
+      
+      const lastPage = await this.getAllEmployees((await this.getAllEmployees(0)).totalPages - 1);
+  
+     
+      this.employeesListSubject.next(lastPage.content);
+      this.currentPageSubject.next(lastPage.number + 1);
+      this.totalPagesSubject.next(lastPage.totalPages);
+  
+      return data;
+    } catch (error) {
+      console.error('Error adding employee:', error);
+      throw error; 
+    }
   }
+  
 
   async getEmployeeById(id:Number|undefined):Promise<EmployeeInterface>{
     let url=this.url+`/getByID?id=${id}`;
@@ -87,11 +103,12 @@ export class EmployeeServiceService {
     });
   }
   
-  async filterEmployeebetweenDateandSkill(startDate: string, endDate: string, skill: string []): Promise<Page<EmployeeInterface>> {
-    let url = this.url+`/dipendentiPerDataDiNascitaECompetenze?dataInizio=1977-01-01&dataFine=2021-01-01&skill=Java?startDate=${startDate}&endDate=${endDate}&skill=${skill}`;
+  async filterEmployeebetweenDateandSkill(startDate: string, endDate: string, skill: string []): Promise<EmployeeInterface[]> {
+    let url = this.url+`/dipendentiPerDataDiNascitaECompetenze?dataInizio=${startDate}&dataFine=${endDate}&skill=${skill}`;
     const data = await fetch(url);
-    const employees = await data.json() ?? { content: [], totalPages: 0, totalElements: 0, size: 0, number: 0 };
-    this.employeesListSubject.next(employees.content);
+    const employees : EmployeeInterface[] = await data.json() ;
+    this.employeesListSubject.next(employees);
+    this.totalPagesSubject.next(0);
     return employees;
   }
 

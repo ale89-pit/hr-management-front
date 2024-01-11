@@ -135,7 +135,7 @@ openNatForm(){
         this.showModal = true
         this.alert = {
           messaggio: 'Dati inseriti correttamente',
-          avviso: 'Premi Ok per continuare',
+          avviso: undefined,
           tipo: undefined
         }
         
@@ -186,6 +186,7 @@ openNatForm(){
   closeModal(){
     console.log("chiusura form")
     this.showForm.emit(false)
-    this.showModal = false
+    this.showModal = false;
+    
   }
 }

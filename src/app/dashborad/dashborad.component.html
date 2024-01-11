@@ -1,77 +1,80 @@
 <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
 
 <div class="container mx-auto my-4 pb-20">
-<div class="container w-4/5 mx-auto my-4 ">
-    <div class="border-solid border-2 border-grey-500 p-3">
-        <div class="flex align-center justify-end">
-            <label class="py-1 my-3 mx-3 font-bold text-gray-700">Aggiungi dipendente</label>
-            <button type="button" class="px-3 py-1 my-3 font-semibold rounded-full bg-gray-300 dark:text-gray-800 flex"
-                (click)="toggle()">
-                <span *ngIf="!showForm" class="material-symbols-outlined">add</span>
-                <span *ngIf="showForm" class="material-symbols-outlined">
-check_indeterminate_small
-</span>
-            </button>
+    <div class="container w-4/5 mx-auto my-4 ">
+        <div class="border-solid border-2 border-grey-500 p-3">
+            <div class="flex align-center justify-end">
+                <label class="py-1 my-3 mx-3 font-bold text-gray-700">Aggiungi dipendente</label>
+                <button type="button"
+                    class="px-3 py-1 my-3 font-semibold rounded-full bg-gray-300 dark:text-gray-800 flex"
+                    (click)="toggle()">
+                    <span *ngIf="!showForm" class="material-symbols-outlined">add</span>
+                    <span *ngIf="showForm" class="material-symbols-outlined">
+                        check_indeterminate_small
+                    </span>
+                </button>
+            </div>
+            <ng-template [ngIf]="showForm">
+                <app-form-employee (showForm)="toggle()"></app-form-employee>
+            </ng-template>
         </div>
-        <ng-template [ngIf]="showForm" >
-            <app-form-employee ></app-form-employee>
-        </ng-template>
-    </div>
+
+        <app-search-component (employees)="resultSearch($event)"
+            (searchInput)="handleSearchInput($event)"></app-search-component>
+
+        <div class="container w-4/5 sm:w-full p-2 mx-auto rounded-md sm:p-4 my-5 dark:text-gray-100 dark:bg-gray-900">
 
 
-    <div class="container w-4/5 sm:w-full p-2 mx-auto rounded-md sm:p-4 my-5 dark:text-gray-100 dark:bg-gray-900">
 
 
-        <app-search-component  (employees)="resultSearch($event)"
-        (searchInput)="handleSearchInput($event)"></app-search-component>
-
-
-        <h2 class="mb-3 text-2xl font-semibold leadi">Standings</h2>
-        <div class="overflow-x-auto">
-            <table class="min-w-full text-xs">
-                <thead class="rounded-t-lg dark:bg-gray-700">
-                    <tr class="text-right">
-                        <th title="Matricola" class="p-3 text-left">Matricola</th>
-                        <th title="Nome" class="p-3">Nome</th>
-                        <th title="Cognome" class="p-3">Cognome</th>
-                        <th title="Data di Nascita" class="p-3">Data di Nascita</th>
-                        <th title="Città" class="p-3">Città</th>
-                        <th title="Indirizzo" class="p-3">Indirizzo</th>
-                        <th title="Action" class="p-3">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let employee of employeesList"
-                        class="text-right border-b border-opacity-20 dark:border-gray-700 dark:bg-gray-800">
-                        <td class="px-3 py-2 text-left">
-                            <span>{{employee.matricola}}</span>
-                        </td>
-                        <td class="px-3 py-2">
-                            <span>{{employee.nome}}</span>
-                        </td>
-                        <td class="px-3 py-2">
-                            <span>{{employee.cognome}}</span>
-                        </td>
-                        <td class="px-3 py-2">
-                            <span>{{employee.dataDiNascita}}</span>
-                        </td>
-                        <td class="px-3 py-2 text-right">
-                            <span>{{employee.citta}}</span>
-                        </td>
-                        <td class="px-3 py-2">
-                            <span>{{employee.indirizzo}}</span>
-                        </td>
-                        <td class="px-3 py-2">
-                            <a class="border-2 p-1 border-blue-500 m-6 custom-button-spacing rounded-b-lg text-white bg-blue-500"
-                                [routerLink]="['/details', employee.idDipendente]">Dettagli</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <h2 class="mb-3 text-2xl font-semibold leadi">Standings</h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full text-xs">
+                    <thead class="rounded-t-lg dark:bg-gray-700">
+                        <tr class="text-right">
+                            <th title="Matricola" class="p-3 text-left">Matricola</th>
+                            <th title="Nome" class="p-3">Nome</th>
+                            <th title="Cognome" class="p-3">Cognome</th>
+                            <th title="Data di Nascita" class="p-3">Data di Nascita</th>
+                            <th title="Città" class="p-3">Città</th>
+                            <th title="Indirizzo" class="p-3">Indirizzo</th>
+                            <th title="Action" class="p-3">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let employee of employeesList"
+                            class="text-right border-b border-opacity-20 dark:border-gray-700 dark:bg-gray-800">
+                            <td class="px-3 py-2 text-left">
+                                <span>{{employee.matricola}}</span>
+                            </td>
+                            <td class="px-3 py-2">
+                                <span>{{employee.nome}}</span>
+                            </td>
+                            <td class="px-3 py-2">
+                                <span>{{employee.cognome}}</span>
+                            </td>
+                            <td class="px-3 py-2">
+                                <span>{{employee.dataDiNascita}}</span>
+                            </td>
+                            <td class="px-3 py-2 text-right">
+                                <span>{{employee.citta}}</span>
+                            </td>
+                            <td class="px-3 py-2">
+                                <span>{{employee.indirizzo}}</span>
+                            </td>
+                            <td class="px-3 py-2">
+                                <a class="border-2 p-1 border-blue-500 m-6 custom-button-spacing rounded-b-lg text-white bg-blue-500"
+                                    [routerLink]="['/details', employee.idDipendente]">Dettagli</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <app-page [totalPages]="totalPages" [currentPage]="currentPage"
+                (pageChange)="changePage($event)"></app-page>
         </div>
-        <app-page [totalPages]="totalPages" [currentPage]="currentPage" (pageChange)="changePage($event)" ></app-page>
     </div>
-</div>

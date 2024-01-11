@@ -46,6 +46,7 @@ export class DashboradComponent implements OnInit, OnChanges, OnDestroy {
       this.employeesList = emp.content;
       this.currentPage = emp.number + 1;
       this.totalPages = emp.totalPages;
+      this.totalElements = emp.totalElements;
       console.log(this.employeesList);
     });
 
@@ -84,7 +85,7 @@ export class DashboradComponent implements OnInit, OnChanges, OnDestroy {
 
   toggle() {
     this.showForm = !this.showForm;
-    console.log(this.showForm);
+    
   }
 
   ngOnDestroy(): void {
