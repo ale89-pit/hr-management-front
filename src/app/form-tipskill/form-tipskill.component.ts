@@ -22,7 +22,8 @@ export class FormTipskillComponent implements OnInit{
   alert:ModalContent={
     messaggio:"empty message",
     avviso: "Error: initialize message",
-    tipo: undefined
+    tipo: undefined,
+    showAnnulla: undefined
   }
   showForm!: boolean;
   public showModal!: boolean;
@@ -32,6 +33,7 @@ export class FormTipskillComponent implements OnInit{
   employee!: EmployeeInterface;
   form!:FormGroup;
   isAtLeastOneCheckboxSelected!: boolean;
+  submitted!:boolean;
 
   constructor(private employeeService: EmployeeServiceService,
     private tipskillService: TipskillServiceService,
@@ -39,6 +41,7 @@ export class FormTipskillComponent implements OnInit{
     private dataSharingService: DataSharingService) { }
 
   ngOnInit(): void {
+    this.submitted=false;
     this.dataSharingService.data$.subscribe((newEmployee) => {
       this.employee = newEmployee;
     });
@@ -89,11 +92,13 @@ export class FormTipskillComponent implements OnInit{
   }
 
   submitForm() {
+    this.submitted=true;
     if (this.form.valid && this.isAtLeastOneCheckboxSelected) {
       this.alert={
-        messaggio:"Vuoi continuare?",
-        avviso: "Attenzione stai per modificare le  competenze a cui il curriculum fa riferimento",
-        tipo: Opzioni.Aggiungi
+        messaggio:"Vuoi aggiungere altre competenze a cui il curriculum fa riferimento?",
+        avviso: undefined,
+        tipo: Opzioni.Aggiungi,
+        showAnnulla: true
       }
       this.showModal = true;
       this.idTipskills=[];
@@ -103,6 +108,7 @@ export class FormTipskillComponent implements OnInit{
 
   ShowForm(){
     this.showForm=!this.showForm;
+    this.submitted=false;
   }
 
   closeModal(conferma:ModalInterface){

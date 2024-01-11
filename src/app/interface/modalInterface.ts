@@ -2,6 +2,7 @@ export interface ModalContent{
     messaggio: string|undefined;
     avviso: string|undefined;
     tipo: number|undefined;
+    showAnnulla:boolean|undefined;
 }
 export enum Opzioni {
     Aggiungi=0,

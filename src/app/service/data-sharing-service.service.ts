@@ -45,6 +45,7 @@ export class DataSharingService {
         const blob=this.curriculumService.base64ToStringForPdf(cv.curriculum);//console.log(blob)
         cv.pdfUrl=this.sanitizer.bypassSecurityTrustResourceUrl(URL.createObjectURL(blob));//console.log(cv.pdfUrl)
       }
+      cv.submitted=false
       cv.modificaCurriculum=false
     });
     this.dataSubject.next(newData);

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ModalContent, ModalInterface } from '../interface/modalInterface';
+import { ModalContent, ModalInterface, Opzioni } from '../interface/modalInterface';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-modal',
@@ -15,7 +15,8 @@ export class ModalComponent {
   @Input() finestra:ModalContent={
     messaggio: undefined,
     avviso: undefined,
-    tipo: undefined
+    tipo: undefined,
+    showAnnulla: undefined,
   }
   ritorno:ModalInterface={
     conferma: undefined,
@@ -23,12 +24,11 @@ export class ModalComponent {
   }
   @Output() close: EventEmitter<ModalInterface> = new EventEmitter<ModalInterface>();
 
-  showButton: boolean = true;
   constructor(private currentRoute: Router) {
   if(this.currentRoute.url=='/'){
-    this.showButton = false;
+    this.finestra.showAnnulla = false;
   }
-   console.log(this.currentRoute.url)
+   //console.log(this.currentRoute.url)
   }
 
 

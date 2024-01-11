@@ -20,13 +20,15 @@ export class FormCurriculumComponent implements OnInit{
   alert:ModalContent={
     messaggio:"empty message",
     avviso: "Error: initialize message",
-    tipo: undefined
+    tipo: undefined,
+    showAnnulla: undefined
   }
   employee!:EmployeeInterface;
   isAtLeastOneCv!:boolean;
   public selectedFiles: FileUpload[]=[];
   public showModal!: boolean;
   showForm!: boolean
+  submitted!:boolean
 
   constructor(private employeeService: EmployeeServiceService,
     private dataSharingService: DataSharingService,
@@ -34,6 +36,7 @@ export class FormCurriculumComponent implements OnInit{
     ) {  }
 
     ngOnInit(): void {
+      this.submitted=false
       this.showForm = false;
       this.showModal = false;
       this.employee = this.dataSharingService.data;
@@ -54,11 +57,13 @@ export class FormCurriculumComponent implements OnInit{
     }
 
   uploadFiles(){
+    this.submitted=true;
     if(this.selectedFiles.length> 0) {
       this.alert={
         messaggio:"Vuoi aggiungere un nuovo curriculum?",
         avviso:undefined,
-        tipo: Opzioni.Aggiungi
+        tipo: Opzioni.Aggiungi,
+        showAnnulla: true
       }
       this.showModal = true;
     }
@@ -86,7 +91,8 @@ export class FormCurriculumComponent implements OnInit{
                 this.alert={
                   messaggio:undefined,
                   avviso:"Errore durante l'aggiunta del curriculum. Possibili duplicati!",
-                  tipo: Opzioni.ErroreCVsDuplicati
+                  tipo: Opzioni.ErroreCVsDuplicati,
+                  showAnnulla: false
                 }
                 //console.log(alert)
                 this.showModal = true;
@@ -96,7 +102,8 @@ export class FormCurriculumComponent implements OnInit{
                 this.alert={
                   messaggio:undefined,
                   avviso:"Errore durante l'aggiunta del curriculum. Documenti vuoti!",
-                  tipo: Opzioni.ErroreFileVuoti
+                  tipo: Opzioni.ErroreFileVuoti,
+                  showAnnulla: false
                 }
                 //console.log(alert)
                 this.showModal = true;
@@ -136,5 +143,6 @@ export class FormCurriculumComponent implements OnInit{
     this.isAtLeastOneCv=false;
     this.selectedFiles = [];
     this.showForm=!this.showForm;
+    this.submitted=false
   }
 }

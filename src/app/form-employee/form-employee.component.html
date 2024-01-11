@@ -1,13 +1,13 @@
-<div class="bg-gray-100 dark:bg-gray-800 transition-colors duration-300 ">
+<div class="bg-gray-300 dark:bg-gray-500 transition-colors duration-300 ">
     <div class="container mx-auto p-4">
-        <div class="bg-white dark:bg-gray-700 shadow rounded-lg p-6">
-            <h1 class="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Personal Information</h1>
+        <div class="bg-gray-400 shadow rounded-lg p-6">
+            <h1 class="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Area personale</h1>
 
             <form [formGroup]="form" (submit)="addEmployee()">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                     <div>
-                        <label>First name</label>
-                        <input type="text" placeholder="First name" formControlName="nome"
+                        <label>Nome: </label>
+                        <input type="text" placeholder="Nome" formControlName="nome"
                             class="border p-2 rounded w-full"
                             [ngClass]="{ 'border-red-500': form.get('nome')?.invalid && form.controls['nome'].touched }">
                         <div *ngIf="submitted && form.controls.nome.invalid" class="text-red-500">
@@ -15,8 +15,8 @@
                         </div>
                     </div>
                     <div>
-                        <label>Last name</label>
-                        <input type="text" placeholder="Last name" formControlName="cognome"
+                        <label>Cognome: </label>
+                        <input type="text" placeholder="Cognome" formControlName="cognome"
                             class="border p-2 rounded w-full"
                             [ngClass]="{ 'border-red-500': form.get('cognome')?.invalid && form.controls['cognome'].touched }">
                         <div *ngIf="submitted && form.controls.cognome.invalid" class="text-red-500">
@@ -24,41 +24,41 @@
                         </div>
                     </div>
                     <div>
-                        <label>Date of birth</label>
-                        <input type="date" placeholder="Date of birth" formControlName="dataDiNascita"
+                        <label>Data di nascita: </label>
+                        <input type="date" placeholder="Data di nascita" formControlName="dataDiNascita"
                             class="border p-2 rounded w-full"
                             [ngClass]="{ 'border-red-500': form.get('dataDiNascita')?.invalid && form.controls['dataDiNascita'].touched }">
                         <div *ngIf="submitted && form.controls.dataDiNascita.hasError('required')" class="text-red-500">
-                            <p>Data di nascita is required</p>
+                            <p>Date of birth is required</p>
                         </div>
                         <div *ngIf="submitted && form.controls.dataDiNascita.hasError('minAge')" class="text-red-500">
-                            <p>Data di nascita non valida</p>
+                            <p>Date of birth invalid</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                     <div>
-                        <label>City</label>
-                        <input type="citta" placeholder="City" formControlName="citta" class="border p-2 rounded w-full"
+                        <label>Citta: </label>
+                        <input type="citta" placeholder="Città" formControlName="citta" class="border p-2 rounded w-full"
                             [ngClass]="{ 'border-red-500': form.get('citta')?.invalid && form.controls['citta'].touched }">
                             <div *ngIf="submitted && form.controls.citta.hasError('required')" class="text-red-500">
-                                <p>Città is required</p>
+                                <p>City is required</p>
                             </div>
                     </div>
                     <div>
-                        <label>Address</label>
-                        <input type="text" placeholder="Address" formControlName="indirizzo"
+                        <label>Indirizzo: </label>
+                        <input type="text" placeholder="Indirizzo" formControlName="indirizzo"
                             class="border p-2 rounded w-full"
                             [ngClass]="{ 'border-red-500': form.get('indirizzo')?.invalid && form.controls['indirizzo'].touched }">
                             <div *ngIf="submitted && form.controls.indirizzo.hasError('required')" class="text-red-500">
-                                <p>Indirizzo is required</p>
+                                <p>Address is required</p>
                             </div>
                     </div>
                 </div>
 
                 <div class="mb-4">
-                    <label>Nationality</label>
+                    <label>Nazionalità: </label>
                     <select class="border p-2 rounded w-full" formControlName="refNazionalita"
                         [ngClass]="{ 'border-red-500': form.get('refNazionalita')?.invalid && form.controls['refNazionalita'].touched }"
                         (change)= "handleChange($event)">
@@ -68,29 +68,30 @@
                         <!-- Add more countries as needed -->
                     </select>
                     <div *ngIf="submitted && form.controls.refNazionalita.hasError('required')" class="text-red-500">
-                        <p>Nazionalità is required</p>
+                        <p>Nazionality is required</p>
                     </div>
                     <div *ngIf="submitted && form.controls.refNazionalita.hasError('excludeOption')" class="text-red-500">
-                        <p>Nazionalità invalid</p>
+                        <p>Nazionality invalid</p>
                     </div>
                     
                     <form *ngIf="showNatForm" (ngSubmit)="addNazionalita()">
                         <div class="m-2 flex items-center">
                             <input type="text" class="border p-2 rounded w-2/4 mx-2" [(ngModel)]="newNationality" name="newNationality">
-                            <button type="submit" class="px-4 py-2 rounded bg-green-500 text-white hover:bg-blue-600 focus:outline-none transition-colors h-full">Add</button>
+                            <button type="submit" class="px-4 py-2 rounded bg-green-500 text-white hover:bg-blue-600 focus:outline-none transition-colors h-full">Aggiungi</button>
                         </div>
                         
                     </form>
                 </div>
-
+            <div class="flex items-center justify-center">
                 <button type="submit" id="theme-toggle"
                     class="px-4 py-2 rounded bg-green-500 text-white hover:bg-blue-600 focus:outline-none transition-colors">
-                    Create
+                    Crea
                 </button>
+            </div>
             </form>
         </div>
     </div>
-    <div class="fixed top-[25%] right-[25%]" [ngClass]="{ 'hidden': !showModal }">
+    <div class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" [ngClass]="{ 'hidden': !showModal }">
         <app-modal (close)="closeModal()" [finestra]="alert" ></app-modal>
     </div>
 </div>
