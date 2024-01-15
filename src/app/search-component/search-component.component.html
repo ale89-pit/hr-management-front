@@ -72,7 +72,7 @@
             </div>
             <div class="text-gray-300 py-3">
                 <span class="font-bold text-gray-500">Skills selected:</span>
-                <p class="font-bold "> {{selectedSkill}} </p>
+                <span class="font-bold " *ngFor="let selected of selectedSkill"> {{selected + ', ' }} </span>
             </div>
 
         </form>
