@@ -84,7 +84,7 @@ export class SearchComponentComponent implements OnInit {
 
     // console.log( this.skills.controls.filter(control => console.log(control.value.tipologiaSkill)));
   this.skills.controls.filter(control => control.value)
-  
+  this.searchWithFilter();
     console.log(this.allSkills);
   console.log(this.selectedSkill);
 }
