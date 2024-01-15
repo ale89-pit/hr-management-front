@@ -1,6 +1,8 @@
+<link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 <div class="relative flex flex-row flex-wrap w-full m-0 border-2 border-solid  border-grey-500 my-2 dark:bg-gray-900">
     <div class="lg:w-1/2 md:w-full p-2 ">
-        <h5 class="dark:text-gray-300 ">Cerca per nome, cognome o matricola.</h5>
+        <h5 class="dark:text-gray-300 text-sm font-medium">Cerca per nome, cognome o matricola.</h5>
         <form (ngSubmit)="search()"
             class="flex items-center dark:bg-gray-700 border border-solid border-gray-500 rounded-md m-4 p-2">
             <input type="text" placeholder="Cerca..." name="search" [(ngModel)]="searchText"
@@ -18,17 +20,17 @@
         </form>
     </div>
     <div class="lg:w-1/2 md:w-full p-2">
-        <h5 class="dark:text-gray-300">Filtra per data di nascita e competenze</h5>
+        <h5 class="dark:text-gray-300 text-sm font-medium">Filtra per data di nascita e competenze</h5>
 
         <form (ngSubmit)="searchWithFilter()" [formGroup]="formFilter" class="my-2">
             <div
-                class="flex flex-row align-middle justify-center  mx-auto dark:bg-gray-700 border border-solid border-gray-500 rounded-md">
+                class="flex flex-row flex-wrap align-middle justify-center  mx-auto dark:bg-gray-700 border border-solid border-gray-500 rounded-md">
                 <div class="flex flex-col justify-center w-1/2 p-1">
                     <label class="dark:text-gray-300 text-sm font-medium">Start Date</label>
                     <span *ngIf="this.formFilter.get('startDate')?.errors?.['required'] && submitted">
                         <p class="text-red-500">Start Date is required</p>
                     </span>
-                    <input class="border border-solid p-1 m-1" name="startDate" formControlName="startDate"
+                    <input class="border border-solid p-1 m-1 rounded" name="startDate" formControlName="startDate"
                         type="date" />
                 </div>
                 <div class="flex flex-col w-1/2 p-1">
@@ -36,13 +38,18 @@
                     <span *ngIf="this.formFilter.get('endDate')?.errors?.['required'] && submitted">
                         <p class="text-red-500">End Date is required</p>
                     </span>
-                    <input class="border border-solid p-1 m-1" name="endDate" formControlName="endDate" type="date">
+                    <input class="border border-solid p-1 m-1 rounded" name="endDate" formControlName="endDate"
+                        type="date">
                 </div>
 
                 <button type="submit"
-                    class="px-4 py-2 my-auto mx-2 h-min rounded bg-green-500 text-white hover:bg-blue-600 focus:outline-none transition-colors">Filter</button>
+                    class="px-4 py-1 my-2 mx-2 h-min rounded bg-green-500 text-white hover:bg-blue-600 focus:outline-none transition-colors">Filter</button>
                 <button (mouseover)="showSkills = !showSkills" type="button"
-                    class="bg-blue-500 text-white">Skills</button>
+                    class="bg-blue-500 text-white  px-4 py-1 my-2 mx-2 h-max rounded">
+                    <span class="material-symbols-outlined">
+                        checklist
+                    </span>
+                </button>
             </div>
             <div class="text-gray-300 p-5">
                 <span class="font-bold text-gray-500">Skills selected:</span>
@@ -52,7 +59,7 @@
                 <p class="text-red-500">Almost one skill is required</p>
             </span>
             <div (mouseleave)="showSkills = !showSkills" [ngClass]="{'hidden' : !showSkills}" formArrayName="skills"
-                class="absolute top-10 right-0  grid grid-cols-5 gap-4 align-center justify-between border border-solid border-gray-500 rounded-md mb-4 p-4 w-1/2 dark:bg-gray-700">
+                class="absolute lg:top-10 lg:right-1 md:max-w-full lg:max-w-1/2 grid grid-cols-5 gap-4 align-center justify-between border border-solid border-gray-500 rounded-md mb-4 p-4  dark:bg-gray-700">
 
                 <div *ngFor="let skill of allSkills; let i = index" class="flex flex-row ">
 

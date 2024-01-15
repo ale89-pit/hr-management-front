@@ -109,6 +109,7 @@ export class SearchComponentComponent implements OnInit {
 
       this.employeeService.filterEmployeebetweenDateandSkill(this.formFilter.value.startDate, this.formFilter.value.endDate,this.selectedSkill).then((emp) => {
         
+      
         this.employees.emit(emp);
   
       })

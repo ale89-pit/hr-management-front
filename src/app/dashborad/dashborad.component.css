@@ -8,15 +8,27 @@
 
 .material-symbols-outlined {
     font-variation-settings:
-    'FILL' 0,
-    'wght' 400,
-    'GRAD' 0,
-    'opsz' 24
-  }
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+}
 
 .custom-button-spacing {
     margin-top: 10px;
     /* Regola il valore del margine superiore a seconda delle tue esigenze */
     margin-bottom: 10px;
     /* Regola il valore del margine inferiore a seconda delle tue esigenze */
+}
+
+tr:not(.titleRow):hover:nth-child(even) {
+    background-color: #d6d6d6;
+    color: black;
+    font-weight: 500;
+}
+
+tr:not(.titleRow):hover:nth-child(odd) {
+    background-color: #c0c0c0;
+    color: black;
+    font-weight: 500;
 }

@@ -31,11 +31,11 @@
 
 
 
-            <h2 class="mb-3 text-2xl font-semibold leadi">Standings</h2>
+            <h2 class="mb-3 text-2xl font-semibold leadi">Dipendenti</h2>
             <div class="overflow-x-auto">
                 <table class="min-w-full">
                     <thead class=" dark:bg-gray-700">
-                        <tr>
+                        <tr class="titleRow">
                             <th title="Matricola" class="p-3 text-center">Matricola</th>
                             <th title="Nome" class="p-3 text-center">Nome</th>
                             <th title="Cognome" class="p-3 text-center">Cognome</th>
@@ -68,7 +68,7 @@
                             </td>
                             <td class="flex items-center justify-center">
                                 <a class="flex items-center justify-center border-2 p-2 border-blue-500 custom-button-spacing rounded-lg text-white bg-blue-500"
-                                    [routerLink]="['/details', employee.idDipendente]">
+                                    [routerLink]="['/details', employee.idDipendente] " target="_blank">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                         <path stroke-linecap="round" stroke-linejoin="round"
