@@ -3,10 +3,10 @@
 <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
-
-<div class="container mx-auto my-4 pb-20">
+<div class="bg-[#a8c9db] p-1">
+<div class="container mx-auto my-4 pb-20 ">
     <div class="container w-4/5 mx-auto my-4 ">
-        <div class="border-solid border-2 border-grey-500 p-3">
+        <div class="border-solid rounded-lg border-2 border-grey-500 p-3 bg-[#F0FBFF] ">
             <div class="flex align-center justify-end">
                 <label class="py-1 my-3 mx-3 font-bold text-gray-700">Aggiungi dipendente</label>
                 <button type="button"
@@ -26,15 +26,15 @@
         <app-search-component (employees)="resultSearch($event)"
             (searchInput)="handleSearchInput($event)"></app-search-component>
 
-        <div class="container w-4/5 sm:w-full p-2 mx-auto rounded-md sm:p-4 my-5 dark:text-gray-100 dark:bg-gray-900">
+        <div class="container w-4/5 sm:w-full p-2 mx-auto rounded-md sm:p-4 my-5 dark:text-gray-100 bg-[#0e1129]">
 
 
 
 
             <h2 class="mb-3 text-2xl font-semibold leadi">Dipendenti</h2>
             <div class="overflow-x-auto">
-                <table class="min-w-full">
-                    <thead class=" dark:bg-gray-700">
+                <table class="min-w-full ">
+                    <thead class=" bg-[#0e1129]">
                         <tr class="titleRow">
                             <th title="Matricola" class="p-3 text-center">Matricola</th>
                             <th title="Nome" class="p-3 text-center">Nome</th>
@@ -47,7 +47,7 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let employee of employeesList"
-                            class="border-b border-opacity-20 dark:border-gray-700 dark:bg-gray-800">
+                            class="border-b border-opacity-20 dark:border-gray-700 bg-[#2c3446]">
                             <td class="text-center">
                                 <span>{{employee.matricola}}</span>
                             </td>
@@ -67,7 +67,7 @@
                                 <span>{{employee.indirizzo}}</span>
                             </td>
                             <td class="flex items-center justify-center">
-                                <a class="flex items-center justify-center border-2 p-2 border-blue-500 custom-button-spacing rounded-lg text-white bg-blue-500"
+                                <a class="flex items-center justify-center border-2 p-2 border-blue-600 custom-button-spacing rounded-lg text-white bg-blue-600"
                                     [routerLink]="['/details', employee.idDipendente] " target="_blank">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -82,4 +82,5 @@
             </div>
             <app-page [totalPages]="totalPages" [currentPage]="currentPage"
                 (pageChange)="changePage($event)"></app-page>
+        </div>
         </div>

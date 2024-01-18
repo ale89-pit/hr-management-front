@@ -1,14 +1,14 @@
 <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-<div class="relative flex flex-row flex-wrap w-full m-0 border-2 border-solid  border-grey-500 my-2 dark:bg-gray-900">
-    <div class="lg:w-1/2 md:w-full p-2 ">
-        <h5 class="dark:text-gray-300 text-sm font-medium">Cerca per nome, cognome o matricola.</h5>
+<div class="relative flex flex-row flex-wrap w-full m-0  my-4 rounded-md bg-[#0e1129]">
+    <div class="lg:w-1/2 md:w-full p-1 ">
+        <h5 class="text-[#e5e7eb] text-sm font-medium p-2 pl-4 pt-5 ">Cerca per nome, cognome o matricola.</h5>
         <form (ngSubmit)="search()"
-            class="flex items-center dark:bg-gray-700 border border-solid border-gray-500 rounded-md m-4 p-2">
+            class="flex items-center dark:bg-gray-700 border border-solid border-[#2c3446] rounded-md ml-4 mr-4">
             <input type="text" placeholder="Cerca..." name="search" [(ngModel)]="searchText"
                 class="border p-2 rounded lg:w-3/4 w-4/5  text-black m-4" />
             <button type="submit"
-                class="px-4 py-2 rounded bg-green-500 text-white hover:bg-blue-600 focus:outline-none transition-colors">
+                class="px-4 py-2 rounded bg-green-600 text-white hover:bg-blue-600 focus:outline-none transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -19,31 +19,31 @@
 
         </form>
     </div>
-    <div class="lg:w-1/2 md:w-full p-2">
-        <h5 class="dark:text-gray-300 text-sm font-medium">Filtra per data di nascita e competenze</h5>
+    <div class="lg:w-1/2 md:w-full p-5">
+        <h5 class="text-[#e5e7eb] text-sm font-medium">Filtra per data di nascita o per skills</h5>
 
         <form (ngSubmit)="searchWithFilter()" [formGroup]="formFilter" class="my-2">
             <div
-                class="flex flex-row flex-wrap align-middle justify-center  mx-auto dark:bg-gray-700 border border-solid border-gray-500 rounded-md">
+                class="flex flex-row flex-wrap align-middle justify-center  mx-auto dark:bg-gray-700 border border-solid border-[#2c3446] rounded-md">
                 <div class="flex flex-col justify-center w-1/2 p-1">
-                    <label class="dark:text-gray-300 text-sm font-medium">Start Date</label>
+                    <label class="dark:text-gray-300 text-sm font-medium">Data inizio</label>
                     <span *ngIf="this.formFilter.get('startDate')?.errors?.['required'] && submitted">
-                        <p class="text-red-500">Start Date is required</p>
+                        <p class="text-red-500">Data di inizio obbligatoria</p>
                     </span>
                     <input class="border border-solid p-1 m-1 rounded" name="startDate" formControlName="startDate"
                         type="date" />
                 </div>
                 <div class="flex flex-col w-1/2 p-1">
-                    <label class="dark:text-gray-300 text-sm font-medium">End Date</label>
+                    <label class="dark:text-gray-300 text-sm font-medium">Data fine</label>
                     <span *ngIf="this.formFilter.get('endDate')?.errors?.['required'] && submitted">
-                        <p class="text-red-500">End Date is required</p>
+                        <p class="text-red-500">Data di fine obbligatoria</p>
                     </span>
                     <input class="border border-solid p-1 m-1 rounded" name="endDate" formControlName="endDate"
                         type="date">
                 </div>
                 <div class="flex justify-between w-full">
                     <button (click)="showSkills = !showSkills" type="button"
-                        class="bg-blue-500 text-white  px-4 py-1 my-2 mx-2 h-max rounded">
+                        class="bg-blue-600 text-white  px-4 py-1 my-2 mx-2 h-max rounded">
                         Skills
                     </button>
 
@@ -51,7 +51,7 @@
             </div>
 
             <span *ngIf="this.formFilter.get('skills')?.errors?.['atAlmostOneSelected'] && submitted">
-                <p class="text-red-500">Almost one skill is required</p>
+                <p class="text-red-500">Selezionare almeno una skill</p>
             </span>
             <div [ngClass]="{'hidden' : !showSkills}" formArrayName="skills"
                 class=" md:max-w-full lg:max-w-1/2 grid grid-cols-5 gap-4 align-center justify-between border border-solid border-gray-500 rounded-md mb-4 p-4  dark:bg-gray-700">
@@ -71,7 +71,7 @@
 
             </div>
             <div class="text-gray-300 py-3">
-                <span class="font-bold text-gray-500">Skills selected:</span>
+                <span class="font-bold dark:text-gray-400">Skills selezionate:</span>
                 <p class="font-bold "> {{selectedSkill}} </p>
             </div>
 
